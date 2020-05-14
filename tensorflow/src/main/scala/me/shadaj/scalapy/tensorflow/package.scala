@@ -1,11 +1,11 @@
 package me.shadaj.scalapy
 
 import me.shadaj.scalapy.numpy.NDArray
+import me.shadaj.scalapy.py.Writer
+
+import scala.language.implicitConversions
 
 package object tensorflow {
-  import me.shadaj.scalapy.py.Writer
-  import me.shadaj.scalapy.py.FacadeValueProvider
-  import me.shadaj.scalapy.py.Reader
   implicit def double2Tensor(d: Double): Tensor = {
     py.Any.from(d)(Writer.doubleWriter).as[Tensor]
   }
