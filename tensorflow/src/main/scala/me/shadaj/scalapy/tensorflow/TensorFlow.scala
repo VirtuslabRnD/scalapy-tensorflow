@@ -1,7 +1,7 @@
 package me.shadaj.scalapy.tensorflow
 
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.py.{Writer, PyFunction, |}
+import me.shadaj.scalapy.py.{ PyFunction, Writer, | }
 
 // some TensorFlow operations require a LIST list, not just something iterable
 @py.native trait PythonList[T] extends py.Object
