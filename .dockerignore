@@ -1,0 +1,9 @@
+.dockerignore
+Dockerfile
+.git/
+.gitignore
+.idea/
+**/.jvm/
+**/.native/
+**/target/
+.travis.yml
