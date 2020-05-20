@@ -10,20 +10,21 @@ RUN set -x \
 RUN set -x \
   && echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
   && curl -fsL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add \
-  && apt-get update --allow-releaseinfo-change \
+  && apt-get update \
   && apt-get install -y sbt \
   && rm -rf /var/lib/apt/lists/*
 
 RUN set -x \
   && git clone https://github.com/Avasil/scalapy-numpy.git \
   && cd scalapy-numpy \
-  && git checkout shape-reshape \
+  `# Avasil:shape-reshape as of 15-05-2020` \
+  && git checkout a5b49ce1f8e1e716e9bc133a4f16d35f20cf0394 \
   && sed -i 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt \
   && sbt publishLocal
 
 RUN set -x \
  && apt-get update \
- && apt-get install -y build-essential python3-dev \
+ && apt-get install --no-install-recommends -y build-essential python3-dev \
  && rm -rf /var/lib/apt/lists/*
 # https://stackoverflow.com/questions/52904639/dockerfile-with-pip-grpcio-is-very-slow-to-build => fix not applied yet
 RUN set -x \
