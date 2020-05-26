@@ -15,14 +15,6 @@ RUN set -x \
   && rm -rf /var/lib/apt/lists/*
 
 RUN set -x \
-  && git clone https://github.com/Avasil/scalapy-numpy.git \
-  && cd scalapy-numpy \
-  `# Avasil:shape-reshape as of 15-05-2020` \
-  && git checkout a5b49ce1f8e1e716e9bc133a4f16d35f20cf0394 \
-  && sed -i 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt \
-  && sbt publishLocal
-
-RUN set -x \
  && apt-get update \
  && apt-get install --no-install-recommends -y build-essential python3-dev \
  && rm -rf /var/lib/apt/lists/*
