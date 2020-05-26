@@ -1,7 +1,8 @@
-package me.shadaj.scalapy.tensorflow
+package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.numpy.NumPy
 import me.shadaj.scalapy.py
+import me.shadaj.scalapy.tensorflow.TensorFlow
 
 object Example extends App {
   val tf = py.module("tensorflow").as[TensorFlow]

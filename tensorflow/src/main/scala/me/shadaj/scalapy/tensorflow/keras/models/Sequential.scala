@@ -15,7 +15,7 @@ import me.shadaj.scalapy.tensorflow.keras.optimizers.Optimizer
   def compile(optimizer: py.|[String, Optimizer] = "rmsprop",
               loss: py.NoneOr[PyFunction] = py.None,
               metrics: Seq[String] = Seq.empty,
-              loss_weights: Seq[(Double, Double)] = Seq.empty,
+              loss_weights: py.NoneOr[Seq[(Double, Double)]] = py.None,
               sample_weight_mode: py.NoneOr[String] = py.None,
               weighted_metrics: Seq[String] = Seq.empty,
               target_tensors: py.NoneOr[String] = py.None

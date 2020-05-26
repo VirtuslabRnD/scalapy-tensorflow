@@ -1,10 +1,10 @@
-package me.shadaj.scalapy.tensorflow
+package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.py
 import me.shadaj.scalapy.numpy.NumPy
+import me.shadaj.scalapy.py
+import me.shadaj.scalapy.tensorflow.TensorFlow
 import me.shadaj.scalapy.tensorflow.keras.Keras
 import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
-import me.shadaj.scalapy.tensorflow.keras.models.Sequential
 
 object MnistExample extends App {
   val tf = py.module("tensorflow").as[TensorFlow]
@@ -50,7 +50,7 @@ object MnistExample extends App {
 
   val model = kerasA.models.Sequential()
   model.add(layers.Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu", input_shape = input_shape))
-  model.add(layers.Conv2D(filters = 64, kernel_size = (3, 3), activation = "relu"))
+//  model.add(layers.Conv2D(filters = 64, kernel_size = (3, 3), activation = "relu"))
   model.add(layers.MaxPooling2D((2, 2)))
   model.add(layers.Dropout(0.25))
   model.add(layers.Flatten())
