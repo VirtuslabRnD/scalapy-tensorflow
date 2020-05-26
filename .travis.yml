@@ -3,10 +3,6 @@ addons:
   apt:
     update: true
 language: scala
-branches:
-  only:
-    - master
-    - /^v\d+(\.\d+)+$/
 before_install:
   - curl https://raw.githubusercontent.com/scala-native/scala-native/v0.3.7/scripts/travis_setup.sh | bash -x
 install:
@@ -19,5 +15,5 @@ script:
   - pip install numpy
   - sbt test
 after_success:
-  - 'if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./publish.sh; fi'
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -n "$TRAVIS_TAG" ]; then bash ./publish.sh; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -n "$TRAVIS_TAG" ];            then bash ./publish.sh; fi'
