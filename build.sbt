@@ -1,4 +1,5 @@
 import sbt.Keys.libraryDependencies
+import scala.sys.process._
 import sbtcrossproject.CrossPlugin.autoImport.{ CrossType, crossProject }
 
 lazy val scala211Version = "2.11.12"
@@ -31,15 +32,14 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
   .in(file("tensorflow"))
   .settings(
     name := "scalapy-tensorflow-cross",
-    libraryDependencies += "me.shadaj" %%% "scalapy-core" % "0.3.0",
-    libraryDependencies += "me.shadaj" %%% "scalapy-numpy" % "0.1.0+5-ad550211",
+    libraryDependencies += "me.shadaj" %%% "scalapy-numpy" % "0.1.0+6-14ca0424",
     // 3.2.0-SNAP10 is the latest version of scalatest for which a scala-native is available for Scala 2.11.
     // Unfortunately, no stable version of scalatest seems to be available on Maven Central for scala-native :(
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.0-SNAP10" % Test
   ).jvmSettings(
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3" % Test,
     fork in Test := true,
-      javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
+    javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
   ).nativeSettings(
     // We need to stick to Scala 2.11 here since scalapy-core and scalapy-numpy are only provided for scala-native (0.3) under Scala 2.11
     scalaVersion := scala211Version,
