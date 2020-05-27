@@ -15,7 +15,7 @@ object MnistExample extends App {
 
   val batch_size = 128
   val num_classes = 10
-  val epochs = 10
+  val epochs = 2
 
   val img_rows, img_cols = 28
 
@@ -49,8 +49,10 @@ object MnistExample extends App {
   val testLabels = kerasA.utils.to_categorical(y_test, num_classes)
 
   val model = kerasA.models.Sequential()
-  model.add(layers.Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu", input_shape = input_shape))
-//  model.add(layers.Conv2D(filters = 64, kernel_size = (3, 3), activation = "relu"))
+  model.add(
+    layers.Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu", kwargs = Map("input_shape" -> input_shape))
+  )
+  model.add(layers.Conv2D(filters = 64, kernel_size = (3, 3), activation = "relu"))
   model.add(layers.MaxPooling2D((2, 2)))
   model.add(layers.Dropout(0.25))
   model.add(layers.Flatten())

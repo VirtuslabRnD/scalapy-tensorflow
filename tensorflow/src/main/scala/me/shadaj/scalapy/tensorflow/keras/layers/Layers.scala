@@ -19,7 +19,7 @@ import me.shadaj.scalapy.tensorflow.Tensor
              activity_regularizer: py.NoneOr[String] = py.None,
              kernel_constraint: py.NoneOr[String] = py.None,
              bias_constraint: py.NoneOr[String] = py.None,
-             input_shape: py.NoneOr[(Int, Int, Int)] = py.None
+             kwargs: Map[String, py.Any] = Map()
             ): Conv2D = py.nativeNamed
 
   def Dropout(rate: Double,

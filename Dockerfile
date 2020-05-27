@@ -15,6 +15,14 @@ RUN set -x \
   && rm -rf /var/lib/apt/lists/*
 
 RUN set -x \
+  && git clone https://github.com/VirtuslabRnD/scalapy.git \
+  && cd scalapy \
+  `# VirtuslabRnD:kwargs as of 27-05-2020` \
+  && git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f \
+  && sed -i 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt \
+  && sbt publishLocal
+
+RUN set -x \
  && apt-get update \
  && apt-get install --no-install-recommends -y build-essential python3-dev \
  && rm -rf /var/lib/apt/lists/*
