@@ -32,7 +32,7 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
   .in(file("tensorflow"))
   .settings(
     name := "scalapy-tensorflow-cross",
-    // scalapy-core version should be consistent with what our version of scalapy-numpy uses
+    // scalapy-core version will replace the one in scalapy-numpy (maintaining binary compatibility)
     libraryDependencies += "me.shadaj" %%% "scalapy-core" % "0.3.0+38-2597f7b2",
     libraryDependencies += "me.shadaj" %%% "scalapy-numpy" % "0.1.0+6-14ca0424" exclude("me.shadaj", "scalapy-core"),
     // 3.2.0-SNAP10 is the latest version of scalatest for which a scala-native is available for Scala 2.11.

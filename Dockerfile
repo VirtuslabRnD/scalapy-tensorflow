@@ -4,7 +4,7 @@ RUN set -x \
   `# workaround for error in debian-slim during openjdk installation` \
   && mkdir -p /usr/share/man/man1 \
   && apt-get update \
-  && apt-get install --no-install-recommends -y curl git gnupg openjdk-11-jre-headless python3 python3-pip \
+  && apt-get install --no-install-recommends -y curl git gnupg openjdk-11-jre-headless python3 \
   && rm -rf /var/lib/apt/lists/*
 
 RUN set -x \
@@ -24,7 +24,7 @@ RUN set -x \
 
 RUN set -x \
  && apt-get update \
- && apt-get install --no-install-recommends -y build-essential python3-dev \
+ && apt-get install --no-install-recommends -y build-essential python3-dev python3-pip \
  && rm -rf /var/lib/apt/lists/*
 # https://stackoverflow.com/questions/52904639/dockerfile-with-pip-grpcio-is-very-slow-to-build => fix not applied yet
 RUN set -x \
