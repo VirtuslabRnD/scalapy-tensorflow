@@ -5,10 +5,10 @@ addons:
 language: scala
 before_install:
   - curl https://raw.githubusercontent.com/scala-native/scala-native/v0.3.7/scripts/travis_setup.sh | bash -x
-  - sudo apt-get install python3-dev
+  - sudo apt-get install python3.7-dev
 install:
-  - pyenv install -s 3.6.3
-  - pyenv global 3.6.3
+  - pyenv install -s 3.7.0
+  - pyenv global 3.7.0
   - pip install tensorflow
   - git clone https://github.com/VirtuslabRnD/scalapy.git
   - cd scalapy
@@ -17,7 +17,7 @@ install:
   - sbt publishLocal
   - cd ..
 script:
-  - export JEP_PATH="/opt/python/3.6.3/lib/python3.6/site-packages/jep"
+  - export JEP_PATH="/opt/python/3.7.0/lib/python3.7/site-packages/jep"
   - export LD_LIBRARY_PATH=$(python3-config --prefix)/lib
   - pip install numpy
   - sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.Example'
