@@ -1,31 +1,73 @@
-sudo: required
-addons:
-  apt:
-    update: true
 language: scala
-before_install:
-  - curl https://raw.githubusercontent.com/scala-native/scala-native/v0.3.7/scripts/travis_setup.sh | bash -x
-  - sudo apt install -y software-properties-common
-  - sudo add-apt-repository -y ppa:deadsnakes/ppa
-  - sudo apt-get update
+
+jobs:
+  include:
+    - os: osx
+      osx_image: xcode9.4
+      before_install:
+        - brew tap homebrew/cask-versions
+        - brew tap adoptopenjdk/openjdk
+        - brew cask install adoptopenjdk/openjdk/adoptopenjdk8
+        - PATH=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin:$PATH
+        - export PATH
+
+        - brew install bdw-gc
+        - brew link bdw-gc
+        - brew install jq
+        - brew install re2
+
+    - os: linux
+      dist: bionic
+      before_install:
+        # Remove pre-bundled libunwind
+        - sudo find /usr -path '*/*libunwind*' -delete
+
+        # Use pre-bundled clang
+        - export PATH=/usr/local/clang-5.0.0/bin:$PATH
+        - export CXX=clang++
+
+        - sudo apt-get update
+        - sudo apt-get install -y libgc-dev liblzma-dev libre2-dev libunwind-dev
+
+
 install:
-  - sudo apt-get install -y python3.7-dev
-  - pyenv global 3.7
-  - pip install tensorflow
+  - pyenv install --list
+  - PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.3
+  - pyenv install 3.6-dev
+  - pyenv global 3.6.3
+  - PATH="$(pyenv root)/shims:$PATH"
+  - export PATH
+
+  - pyenv root
+  - pyenv prefix 3.6.3
+  - pyenv prefix 3.6-dev
+
   - git clone https://github.com/VirtuslabRnD/scalapy.git
   - cd scalapy
   - git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f
-  - sed -i 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt
+  - sed -i='' 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt
+  - sed -i='' 's/Native.register("python3.7m")/Native.register(System.getProperty("scalapy.core.python-library", "python3.7m"))/' core/jvm/src/main/scala/me/shadaj/scalapy/py/CPythonAPI.scala
   - sbt publishLocal
   - cd ..
-script:
-  - export JEP_PATH="/opt/python/3.7.0/lib/python3.7/site-packages/jep"
-  - export LD_LIBRARY_PATH=$(python3-config --prefix)/lib
+
+before_script:
   - pip install numpy
-  - sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.Example'
+  - pip install tensorflow==1.14.0
   - pip install keras
-  - sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
-  - sbt test
+
+script:
+  - SCALA_NATIVE_LINKING_OPTIONS="-L$(pyenv prefix 3.6.3)/lib -llzma" sbt test
+  - sbt
+      -Djna.library.path="$(pyenv prefix 3.6.3)/lib"
+      -Dscalapy.core.python-library=python3.6m
+      'project scalaPyTensorFlowCrossJVM'
+      'runMain me.shadaj.scalapy.tensorflow.example.Example'
+  - sbt
+      -Djna.library.path="$(pyenv prefix 3.6.3)/lib"
+      -Dscalapy.core.python-library=python3.6m
+      'project scalaPyTensorFlowCrossJVM'
+      'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
+
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -n "$TRAVIS_TAG" ];            then bash ./publish.sh; fi'

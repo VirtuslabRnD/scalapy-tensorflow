@@ -8,6 +8,7 @@ lazy val scala212Version = "2.12.11"
 organization in ThisBuild := "me.shadaj"
 scalaVersion in ThisBuild := scala212Version
 
+
 addCommandAlias(
   "publishSignedAll",
   (scalaPyTensorFlow: ProjectDefinition[ProjectReference])
@@ -54,7 +55,10 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
   )
 
 lazy val scalaPyTensorFlowJVM = scalaPyTensorFlowCross.jvm.settings(name := "scalapy-tensorflow-jvm")
-lazy val scalaPyTensorFlowNative = scalaPyTensorFlowCross.native.settings(name := "scalapy-tensorflow-native")
+lazy val scalaPyTensorFlowNative = scalaPyTensorFlowCross.native.settings(
+  name := "scalapy-tensorflow-native",
+  nativeLinkingOptions ++= Option(System.getenv("SCALA_NATIVE_LINKING_OPTIONS")).toSeq.flatMap(_.split(" "))
+)
 
 // To make sure that changes to project structure are picked up by sbt without an explicit `reload`
 Global / onChangedBuildSource := ReloadOnSourceChanges
