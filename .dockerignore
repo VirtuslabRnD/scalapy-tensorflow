@@ -1,9 +1,12 @@
+ci/
 .dockerignore
 Dockerfile*
 .git/
 .gitignore
 .idea/
 **/.jvm/
+LICENSE
 **/.native/
+README.md
 **/target/
 .travis.yml

@@ -41,8 +41,8 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.0-SNAP10" % Test
   ).jvmSettings(
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3" % Test,
-    fork in Test := true,
-    javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
+    fork := true,
+    javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
   ).nativeSettings(
     // We need to stick to Scala 2.11 here since scalapy-core and scalapy-numpy are only provided for scala-native (0.3) under Scala 2.11
     scalaVersion := scala211Version,
@@ -50,15 +50,15 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
     nativeLinkStubs := true,
     nativeLinkingOptions ++= {
       import scala.sys.process._
-      "python3-config --ldflags".!!.split(' ').map(_.trim).filter(_.nonEmpty).toSeq
+      Seq(
+        "-rpath", s"${"python3-config --prefix".!!.trim}/lib",
+        s"-L${"python3-config --prefix".!!.trim}/lib",
+      ) ++ "python3-config --ldflags".!!.split(' ').map(_.trim).filter(_.nonEmpty).toSeq
     }
   )
 
 lazy val scalaPyTensorFlowJVM = scalaPyTensorFlowCross.jvm.settings(name := "scalapy-tensorflow-jvm")
-lazy val scalaPyTensorFlowNative = scalaPyTensorFlowCross.native.settings(
-  name := "scalapy-tensorflow-native",
-  nativeLinkingOptions ++= Option(System.getenv("SCALA_NATIVE_LINKING_OPTIONS")).toSeq.flatMap(_.split(" "))
-)
+lazy val scalaPyTensorFlowNative = scalaPyTensorFlowCross.native.settings(name := "scalapy-tensorflow-native")
 
 // To make sure that changes to project structure are picked up by sbt without an explicit `reload`
 Global / onChangedBuildSource := ReloadOnSourceChanges
