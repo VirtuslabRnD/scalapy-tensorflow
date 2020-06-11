@@ -4,4 +4,5 @@ import me.shadaj.scalapy.py
 
 @py.native trait Datasets extends py.Object {
   def mnist: Mnist = py.native
+  def imdb: IMDB = py.native
 }

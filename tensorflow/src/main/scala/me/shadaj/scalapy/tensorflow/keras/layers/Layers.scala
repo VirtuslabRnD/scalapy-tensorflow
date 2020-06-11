@@ -1,5 +1,6 @@
 package me.shadaj.scalapy.tensorflow.keras.layers
 
+import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Tensor
 
@@ -46,4 +47,53 @@ import me.shadaj.scalapy.tensorflow.Tensor
             kernel_constraint: py.NoneOr[String] = py.None,
             bias_constraint: py.NoneOr[String] = py.None
            ): Dense = py.nativeNamed
+
+  def Embedding(
+                 input_dim: Int,
+                 output_dim: Int,
+                 embeddings_initializer: String="uniform",
+                 embeddings_regularizer: py.NoneOr[String]=py.None,
+                 activity_regularizer: py.NoneOr[String]=py.None,
+                 embeddings_constraint: py.NoneOr[String]=py.None,
+                 mask_zero: Boolean=false,
+                 input_length: py.NoneOr[Int]=py.None,
+                 kwargs: Map[String, py.Any] = Map()
+               ): Embedding = py.nativeNamed
+
+  def Bidirectional(
+                     layer: Layer,
+                     merge_mode: String="concat",
+                     weights: py.NoneOr[NDArray[Int]]=py.None,
+//                     backward_layer: py.NoneOr[Layer]=py.None,
+                     kwargs: Map[String, py.Any]=Map()
+                   ): Bidirectional = py.nativeNamed
+
+  def LSTM(
+            units: Int,
+            activation: String="tanh",
+            recurrent_activation: String="sigmoid",
+            use_bias: Boolean=true,
+            kernel_initializer: String="glorot_uniform",
+            recurrent_initializer: String="orthogonal",
+            bias_initializer: String="zeros",
+            unit_forget_bias: Boolean=true,
+            kernel_regularizer: py.NoneOr[String]=py.None,
+            recurrent_regularizer: py.NoneOr[String]=py.None,
+            bias_regularizer: py.NoneOr[String]=py.None,
+            activity_regularizer: py.NoneOr[String]=py.None,
+            kernel_constraint: py.NoneOr[String]=py.None,
+            recurrent_constraint: py.NoneOr[String]=py.None,
+            bias_constraint: py.NoneOr[String]=py.None,
+            dropout: Double=0.0,
+            recurrent_dropout: Double=0.0,
+            implementation: Int=2,
+            return_sequences: Boolean=false,
+            return_state: Boolean=false,
+            go_backwards: Boolean=false,
+            stateful: Boolean=false,
+//            time_major: Boolean=false,
+            unroll: Boolean=false,
+            kwargs: Map[String, py.Any]=Map()
+          ): LSTM = py.nativeNamed
+
 }
