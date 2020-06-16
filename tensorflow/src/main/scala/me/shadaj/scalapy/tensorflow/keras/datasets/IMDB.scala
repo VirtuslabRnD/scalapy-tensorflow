@@ -12,6 +12,6 @@ import me.shadaj.scalapy.py
                  seed: Int = 113,
                  start_char: Int = 1,
                  oov_char: Int = 2,
-                 index_from: Int =3,
+                 index_from: Int =3
                ): ((NDArray[Long], NDArray[Long]), (NDArray[Long], NDArray[Long])) = py.native
 }

@@ -65,8 +65,7 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3" % Test,
     fork := true,
-    javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.3.0-SNAP2" % Test,
+    javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
   ).nativeSettings(
     // We need to stick to Scala 2.11 here since scalapy-core and scalapy-numpy are only provided for scala-native (0.3) under Scala 2.11

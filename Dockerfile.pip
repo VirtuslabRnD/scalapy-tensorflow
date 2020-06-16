@@ -2,7 +2,7 @@
 # docker build -t scalapy-tensorflow:base -f Dockerfile.base .
 # docker build -t scalapy-tensorflow:pip -f Dockerfile.pip .
 
-FROM scalapy-tensorflow:base
+FROM scalapy-tensorflow:latest
 
 RUN set -x \
   && apt-get update \
@@ -11,7 +11,7 @@ RUN set -x \
 
 # https://stackoverflow.com/questions/52904639/dockerfile-with-pip-grpcio-is-very-slow-to-build => fix not applied yet
 RUN pip3 install -U pip
-RUN pip3 install numpy tensorflow=2.2.0
+RUN pip3 install numpy tensorflow==2.2.0
 #RUN set -x \
 #  && apt-get update \
 #  && apt-get install -y openjdk-11-jdk-headless \
@@ -26,6 +26,6 @@ COPY . .
 RUN find .
 #ENV JAVA_OPTS='-Djava.library.path=/usr/local/lib/python3.7/dist-packages/jep'
 RUN sbt compile
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
+# RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
+# RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
 # RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'
