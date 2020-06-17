@@ -2,7 +2,7 @@
 # docker build -t scalapy-tensorflow:base -f Dockerfile.base .
 # docker build -t scalapy-tensorflow:conda -f Dockerfile.conda .
 
-FROM scalapy-tensorflow:latest
+FROM scalapy-tensorflow:base
 
 RUN set -x \
   && curl -fL -o miniconda-install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
@@ -16,6 +16,6 @@ RUN conda install --yes --channel=conda-forge tensorflow=2.2.0 keras
 WORKDIR /scalapy-tensorflow
 COPY . .
 RUN find .
-# RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
-# RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
-# RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'
+RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
+RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
+RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'

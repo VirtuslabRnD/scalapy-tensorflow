@@ -55,7 +55,7 @@ script:
   - git clone https://github.com/VirtuslabRnD/scalapy.git
   - cd scalapy
   - git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f
-  - sed -i='' 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt
+  #- sed -i='' 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt
   - sbt publishLocal
   - cd ..
 
