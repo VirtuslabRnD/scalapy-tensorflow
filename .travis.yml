@@ -55,18 +55,21 @@ script:
   - git clone https://github.com/VirtuslabRnD/scalapy.git
   - cd scalapy
   - git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f
-  - sed -i='' 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt
+  #- sed -i='' 's/^scalaVersion in ThisBuild := scala213Version$/scalaVersion in ThisBuild := scala212Version; version in ThisBuild ~= (_.replaceFirst("\\\\+[^+]+$", ""))/' build.sbt
   - sbt publishLocal
   - cd ..
 
   # -batch is necessary to make sure sbt doesn't stall waiting for user input in case of certain failures
   - sbt -batch test
-  - sbt -batch
-    'project scalaPyTensorFlowCrossJVM'
-    'runMain me.shadaj.scalapy.tensorflow.example.Example'
+#  - sbt -batch
+#    'project scalaPyTensorFlowCrossJVM'
+#    'runMain me.shadaj.scalapy.tensorflow.example.Example'
   - sbt -batch
     'project scalaPyTensorFlowCrossJVM'
     'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
+#  - sbt -batch
+#    'project scalaPyTensorFlowCrossNative'
+#    'run me.shadaj.scalapy.tensorflow.example.Example'
 
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'

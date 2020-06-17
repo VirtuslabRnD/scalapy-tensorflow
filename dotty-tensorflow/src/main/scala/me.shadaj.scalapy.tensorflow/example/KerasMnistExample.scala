@@ -5,7 +5,7 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.TensorFlow
 import me.shadaj.scalapy.tensorflow.keras.Keras
 import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
-import me.shadaj.scalapy.tensorflow.modules._
+import me.shadaj.scalapy.tensorflow.Modules._
 import Int.int2long
 import scala.language.implicitConversions
 
@@ -14,7 +14,7 @@ object KerasMnistExample {
   def kerasMnist(): Unit = {
     val tf = tensorflow
     val np = numpy
-    val kerasA = keras
+    val kerasA = tf.keras
     val K = kerasA.backend
     val layers = kerasA.layers
 
