@@ -2,6 +2,7 @@ package me.shadaj.scalapy.tensorflow
 
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.{ PyFunction, Writer, | }
+import me.shadaj.scalapy.tensorflow.keras.Keras
 
 // some TensorFlow operations require a LIST list, not just something iterable
 @py.native trait PythonList[T] extends py.Object
@@ -18,6 +19,7 @@ object PythonList {
 
   def placeholder(`type`: String, shape: Seq[py.NoneOr[Int]]): Tensor = py.native
 
+  def keras: Keras = py.native
   def nn: NeuralNetwork = py.native
   def random: Random = py.native
   def train: Training = py.native

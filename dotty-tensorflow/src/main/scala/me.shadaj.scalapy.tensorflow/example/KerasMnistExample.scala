@@ -14,7 +14,7 @@ object KerasMnistExample {
   def kerasMnist(): Unit = {
     val tf = tensorflow
     val np = numpy
-    val kerasA = keras
+    val kerasA = tf.keras
     val K = kerasA.backend
     val layers = kerasA.layers
 

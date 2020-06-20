@@ -1,5 +1,6 @@
 package me.shadaj.scalapy.tensorflow.example
 
+import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Modules._
 
 object Example extends App {
@@ -14,8 +15,8 @@ object Example extends App {
   val y = (W * xData) + b
 
   val loss = tf.reduce_mean(tf.square(y - yData))
-  val optimizer = keras.optimizers.SGD(0.5)
-  val train = optimizer.minimize(loss)
+  val optimizer = tf.keras.optimizers.SGD(learningRate = 0.5)
+  val train = optimizer.minimize(loss, Seq(W, b))
 
   val init = tf.global_variables_initializer()
 

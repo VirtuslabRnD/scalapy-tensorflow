@@ -11,7 +11,6 @@ import me.shadaj.scalapy.tensorflow.keras.losses.Losses
 import me.shadaj.scalapy.tensorflow.keras.layers.Layers
 import me.shadaj.scalapy.tensorflow.keras.preprocessing.Preprocessing
 
-
 @py.native trait Keras extends py.Object {
   def models: Models = py.native
   def datasets: Datasets = py.native

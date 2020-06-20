@@ -5,6 +5,7 @@ import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
 
 object MnistExample extends App {
   val tf = tensorflow
+  val keras = tf.keras
   val np = numpy
   val K = keras.backend
   val layers = keras.layers

@@ -14,7 +14,7 @@ object BidirectionalLSTMExample {
   def bidirectionalLSTM() = {
     val tf = tensorflow
     val np = numpy
-    val keras1 = keras
+    val keras1 = tf.keras
     val layers = keras1.layers
     val imdb = keras1.datasets.imdb
     val sequence = keras1.preprocessing.sequence

@@ -2,7 +2,7 @@ package me.shadaj.scalapy.tensorflow.keras.optimizers
 
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.{ PyValue, Reader }
-import me.shadaj.scalapy.tensorflow.{ Operation, Tensor }
+import me.shadaj.scalapy.tensorflow.{ Operation, Tensor, Variable }
 
 @py.native trait Optimizers extends py.Object {
   def Adadelta(): Adadelta = py.native
@@ -11,7 +11,7 @@ import me.shadaj.scalapy.tensorflow.{ Operation, Tensor }
 }
 
 @py.native trait Optimizer extends py.Object {
-  def minimize(loss: Tensor): Operation = py.native
+  def minimize(loss: Tensor, var_list: Seq[Variable]): Operation = py.native
 }
 
 @py.native class Adadelta(val value: PyValue) extends Optimizer
