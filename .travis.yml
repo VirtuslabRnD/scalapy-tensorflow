@@ -67,9 +67,9 @@ script:
   - sbt -batch
     'project scalaPyTensorFlowCrossJVM'
     'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
-  - sbt -batch
-    'project scalaPyTensorFlowCrossNative'
-    'run me.shadaj.scalapy.tensorflow.example.Example'
+#  - sbt -batch
+#    'project scalaPyTensorFlowCrossNative'
+#    'run me.shadaj.scalapy.tensorflow.example.Example'
 
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'

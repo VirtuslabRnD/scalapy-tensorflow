@@ -8,6 +8,6 @@ export PATH
 
 #brew install bdw-gc
 #brew install jq
-#brew install re2
+brew install re2
 
 set +e +x
