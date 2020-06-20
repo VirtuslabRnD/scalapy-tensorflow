@@ -1,7 +1,8 @@
 package me.shadaj.scalapy.tensorflow
 
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.py.{PyFunction, Writer, |}
+import me.shadaj.scalapy.py.{ PyFunction, Writer, | }
+import me.shadaj.scalapy.tensorflow.random.Random
 
 // some TensorFlow operations require a LIST list, not just something iterable
 @py.native trait PythonList[T] extends py.Object
@@ -13,8 +14,6 @@ object PythonList {
 
 @py.native trait TensorFlow extends py.Object {
   def Variable(initialValue: Tensor): Variable = py.native
-
-  def random_uniform(shape: PythonList[Int], min: Double, max: Double): Tensor = py.native
 
   def placeholder(`type`: String): Tensor = py.native
 

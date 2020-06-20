@@ -18,6 +18,6 @@ WORKDIR /scalapy-tensorflow
 COPY . .
 RUN find .
 RUN sbt compile
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'
+RUN sbt -batch 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
+RUN sbt -batch 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
+RUN sbt -batch 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'

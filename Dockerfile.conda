@@ -16,6 +16,6 @@ RUN conda install --yes --channel=conda-forge tensorflow=2.2.0 keras
 WORKDIR /scalapy-tensorflow
 COPY . .
 RUN find .
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
-RUN sbt 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'
+RUN sbt -batch 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.BidirectionalLSTMExample'
+RUN sbt -batch 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.KerasMnistExample'
+RUN sbt -batch 'project dottyTensorflow' 'runMain me.shadaj.scalapy.tensorflow.example.GradientDescentOptimizerExample'
