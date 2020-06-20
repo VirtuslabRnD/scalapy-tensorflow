@@ -10,13 +10,12 @@ object GradientDescentOptimizerExample{
   @main
   def gradientDescentOptimizer(): Unit = {
     val tf = tensorflow
-    var random = tensorflowRandom
     val np = numpy
 
     val xData = np.random.rand(100).astype(np.float32)
     val yData = (xData * 0.1) + 0.3
 
-    val W = tf.Variable(random.uniform(shape = Seq(1), minval = -1, maxval = 1))
+    val W = tf.Variable(tf.random.uniform(shape = Seq(1), minval = -1, maxval = 1))
     val b = tf.Variable(tf.zeros(Seq(1)))
     val y = (W * xData) + b
 

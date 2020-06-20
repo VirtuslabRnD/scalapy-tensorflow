@@ -1,17 +1,13 @@
 package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.numpy.NumPy
-import me.shadaj.scalapy.py
-import me.shadaj.scalapy.tensorflow.TensorFlow
-import me.shadaj.scalapy.tensorflow.keras.Keras
+import me.shadaj.scalapy.tensorflow.Modules._
 import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
 
 object MnistExample extends App {
-  val tf = py.module("tensorflow").as[TensorFlow]
-  val np = py.module("numpy").as[NumPy]
-  val kerasA = py.module("keras").as[Keras]
-  val K = kerasA.backend
-  val layers = kerasA.layers
+  val tf = tensorflow
+  val np = numpy
+  val K = keras.backend
+  val layers = keras.layers
 
   val batch_size = 128
   val num_classes = 10
@@ -19,7 +15,7 @@ object MnistExample extends App {
 
   val img_rows, img_cols = 28
 
-  val mnist: Mnist  = kerasA.datasets.mnist
+  val mnist: Mnist  = keras.datasets.mnist
   val ((x_train, y_train), (x_test, y_test)) = mnist.load_data()
 
   val (train, test, input_shape) =
@@ -45,10 +41,10 @@ object MnistExample extends App {
   println(s"${trainImages.shape(0)} train samples")
   println(s"${testImages.shape(0)} test samples")
 
-  val trainLabels = kerasA.utils.to_categorical(y_train, num_classes)
-  val testLabels = kerasA.utils.to_categorical(y_test, num_classes)
+  val trainLabels = keras.utils.to_categorical(y_train, num_classes)
+  val testLabels = keras.utils.to_categorical(y_test, num_classes)
 
-  val model = kerasA.models.Sequential()
+  val model = keras.models.Sequential()
   model.add(
     layers.Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu", kwargs = Map("input_shape" -> input_shape))
   )
@@ -61,8 +57,8 @@ object MnistExample extends App {
   model.add(layers.Dense(units = num_classes, activation="softmax"))
 
   model.compile(
-    loss = kerasA.losses.categorical_crossentropy,
-    optimizer = kerasA.optimizers.Adadelta(),
+    loss = keras.losses.categorical_crossentropy,
+    optimizer = keras.optimizers.Adadelta(),
     metrics = Seq("accuracy")
   )
 
