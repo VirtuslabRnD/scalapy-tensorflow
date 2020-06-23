@@ -54,6 +54,8 @@ object PythonList {
 
   def InteractiveSession(): Session = py.native
 
+  def GradientTape(): GradientTape = py.native
+
   def cond(c: Tensor, ifTrue: py.Object, ifFalse: py.Object): Tensor = py.native
 
   def contrib: Contrib = py.native

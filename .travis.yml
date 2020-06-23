@@ -61,15 +61,15 @@ script:
 
   # -batch is necessary to make sure sbt doesn't stall waiting for user input in case of certain failures
   - sbt -batch test
-#  - sbt -batch
-#    'project scalaPyTensorFlowCrossJVM'
-#    'runMain me.shadaj.scalapy.tensorflow.example.Example'
+  - sbt -batch
+    'project scalaPyTensorFlowCrossJVM'
+    'runMain me.shadaj.scalapy.tensorflow.example.Example'
   - sbt -batch
     'project scalaPyTensorFlowCrossJVM'
     'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
-#  - sbt -batch
-#    'project scalaPyTensorFlowCrossNative'
-#    'run me.shadaj.scalapy.tensorflow.example.Example'
+  - sbt -batch
+    'project scalaPyTensorFlowCrossNative'
+    'runMain me.shadaj.scalapy.tensorflow.example.Example'
 
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'
