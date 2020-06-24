@@ -7,9 +7,9 @@ import me.shadaj.scalapy.tensorflow.Tensor
 
 import scala.language.implicitConversions
 
-object GradientDescentOptimizerExample {
-  @main
-  def gradientDescentOptimizer(): Unit = {
+object GradientDescentOptimizerExample extends Runnable {
+
+  def run(): Unit = {
     val tf = tensorflow
     val np = numpy
 

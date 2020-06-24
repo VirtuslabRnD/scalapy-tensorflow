@@ -23,3 +23,9 @@ RUN set -x \
   `# VirtuslabRnD:kwargs as of 27-05-2020` \
   && git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f \
   && sbt publishLocal
+
+# Prerequisites of Scala Native
+RUN set -x \
+  && apt-get update \
+  && apt-get install -y clang libre2-dev libunwind-dev \
+  && rm -rf /var/lib/apt/lists/*

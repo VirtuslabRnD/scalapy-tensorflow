@@ -9,9 +9,9 @@ import me.shadaj.scalapy.tensorflow.Modules._
 import Int.int2long
 import scala.language.implicitConversions
 
-object KerasMnistExample {
-  @main
-  def kerasMnist(): Unit = {
+object KerasMnistExample extends Runnable {
+
+  def run(): Unit = {
     val tf = tensorflow
     val np = numpy
     val kerasA = tf.keras

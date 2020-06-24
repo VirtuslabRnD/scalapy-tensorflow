@@ -9,9 +9,9 @@ import scala.language.implicitConversions
  * https://keras.io/examples/imdb_bidirectional_lstm/
  */
 
-object BidirectionalLSTMExample {
-  @main
-  def bidirectionalLSTM() = {
+object BidirectionalLSTMExample extends Runnable {
+
+  def run() = {
     val tf = tensorflow
     val np = numpy
     val keras1 = tf.keras
