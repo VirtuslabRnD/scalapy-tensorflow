@@ -11,7 +11,7 @@ RUN set -x \
 
 ENV PATH=/root/miniconda/bin:$PATH
 
-RUN conda install --yes --channel=conda-forge tensorflow=2.2.0 keras
+RUN conda install --yes --channel=conda-forge tensorflow=2.2.0
 
 WORKDIR /scalapy-tensorflow
 COPY . .
