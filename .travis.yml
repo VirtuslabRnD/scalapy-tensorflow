@@ -22,6 +22,8 @@ jobs:
       before_install: source ci/travis-before-install-osx.sh
       install:
         - conda_os=MacOSX
+        # TF 2.2.0 is not available on conda for OS X yet
+        - conda_tf_version=2.0.0
         - source ci/travis-install-conda.sh
 
     - os: linux
@@ -48,6 +50,7 @@ jobs:
       before_install: source ci/travis-before-install-xenial.sh
       install:
         - conda_os=Linux
+        - conda_tf_version=2.2.0
         - source ci/travis-install-conda.sh
 
 script:
@@ -61,8 +64,6 @@ script:
   # -batch is necessary to make sure sbt doesn't stall waiting for user input in case of certain failures
   - echo '-batch' > .sbtopts
   - sbt compile test
-    # this particular combination produces more output than the limit allowed by Travis
-  - sbt 'project scalaPyTensorFlowCrossNative' 'run Example' > example-native.log
   - sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
   - sbt 'project scalaPyTensorFlowCrossJVM'    'run Example'
   - sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
