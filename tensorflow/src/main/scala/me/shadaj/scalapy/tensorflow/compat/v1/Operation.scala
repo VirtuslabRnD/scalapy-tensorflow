@@ -1,4 +1,4 @@
-package me.shadaj.scalapy.tensorflow
+package me.shadaj.scalapy.tensorflow.compat.v1
 
 import me.shadaj.scalapy.py
 

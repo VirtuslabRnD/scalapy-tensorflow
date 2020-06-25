@@ -1,6 +1,6 @@
 package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.tensorflow.Modules._
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
 
 object MnistExample extends Runnable {

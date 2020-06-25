@@ -96,4 +96,23 @@ import me.shadaj.scalapy.tensorflow.Tensor
             kwargs: Map[String, py.Any]=Map()
           ): LSTM = py.nativeNamed
 
+  def BatchNormalization(
+            axis: Int= -1,
+            momentum: Double =0.99,
+            epsilon: Double =0.001,
+            center: Boolean=true,
+            scale: Boolean=true,
+            beta_initializer: String="zeros",
+            gamma_initializer: String="ones",
+            moving_mean_initializer: String="zeros",
+            moving_variance_initializer: String="ones",
+            beta_regularizer: py.NoneOr[String]=py.None,
+            gamma_regularizer: py.NoneOr[String]=py.None,
+            beta_constraint: py.NoneOr[String]=py.None,
+            gamma_constraint: py.NoneOr[String]=py.None,
+            renorm: Boolean=false,
+            renorm_clipping: py.NoneOr[String]=py.None,
+            renorm_momentum: Double=0.99,
+            kwargs: Map[String, py.Any]=Map()
+          ): BatchNormalization = py.nativeNamed
 }

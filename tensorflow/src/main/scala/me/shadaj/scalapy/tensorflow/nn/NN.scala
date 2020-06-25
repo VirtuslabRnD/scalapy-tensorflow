@@ -1,9 +1,10 @@
-package me.shadaj.scalapy.tensorflow
+package me.shadaj.scalapy.tensorflow.nn
 
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.PyFunction
+import me.shadaj.scalapy.tensorflow.Tensor
 
-@py.native trait NeuralNetwork extends py.Object {
+@py.native trait NN extends py.Object {
   def relu: PyFunction = py.native
   def relu(features: Tensor): Tensor = py.native
 

@@ -1,8 +1,8 @@
 package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.tensorflow.Modules._
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.Tensor
-import me.shadaj.scalapy.tensorflow.ContextManager
+import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
 object Example extends Runnable {
 
   def run(): Unit = {

@@ -1,8 +1,9 @@
 package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.tensorflow.Modules._
-import me.shadaj.scalapy.tensorflow.{ContextManager, Tensor, nd2Tensor}
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
+import me.shadaj.scalapy.tensorflow.{Tensor, nd2Tensor}
+import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
 
 import scala.language.implicitConversions
 

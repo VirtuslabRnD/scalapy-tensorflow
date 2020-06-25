@@ -28,6 +28,6 @@ import me.shadaj.scalapy.py
     (as[py.Dynamic] / that).as[Tensor]
   }
 
-  //unsafe but there no implicit for py.|[Double, Seq[Double]]
+  // TODO: unsafe but there no implicit for py.|[Double, Seq[Double]]
   def numpy() : py.Any = py.native
 }
