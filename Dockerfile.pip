@@ -10,20 +10,19 @@ RUN set -x \
   && rm -rf /var/lib/apt/lists/*
 
 # https://stackoverflow.com/questions/52904639/dockerfile-with-pip-grpcio-is-very-slow-to-build => fix not applied yet
-RUN pip3 install numpy tensorflow
-#RUN set -x \
-#  && apt-get update \
-#  && apt-get install -y openjdk-11-jdk-headless \
-#  && rm -rf /var/lib/apt/lists/*
-#RUN set -x \
-#  && export JAVA_HOME=$(which java | xargs readlink -f | xargs dirname | xargs dirname) \
-#  && pip3 install jep==3.8.2
-RUN pip3 install keras
+RUN pip3 install -U pip
+RUN pip3 install numpy tensorflow==2.2.0
 
 WORKDIR /scalapy-tensorflow
 COPY . .
 RUN find .
-#ENV JAVA_OPTS='-Djava.library.path=/usr/local/lib/python3.7/dist-packages/jep'
-RUN sbt compile
-RUN sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.Example'
-RUN sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
+RUN echo '-batch' > .sbtopts
+RUN sbt compile test
+
+RUN sbt 'project scalaPyTensorFlowCrossNative' 'run Example'
+RUN sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
+
+RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run Example'
+RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
+
+RUN sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'

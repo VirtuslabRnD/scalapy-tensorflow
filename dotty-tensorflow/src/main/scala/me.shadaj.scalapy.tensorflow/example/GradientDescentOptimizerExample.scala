@@ -1,9 +1,13 @@
 package me.shadaj.scalapy.tensorflow.example
 
+import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Modules._
+import me.shadaj.scalapy.tensorflow.nd2Tensor
 import me.shadaj.scalapy.tensorflow.Tensor
 
-object Example extends Runnable {
+import scala.language.implicitConversions
+
+object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {
     val tf = tensorflow
@@ -41,10 +45,11 @@ object Example extends Runnable {
       (loss_value, gradients)
     }
 
+
     // Select optimizer SGD
     val optimizer = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
-    // Initial Learning step
+    // Initial Learing step
     val loss_value, grads = grad()
     println(s"Step: 0, Initial Loss: ${loss_value}")
     // Learning steps
@@ -57,5 +62,6 @@ object Example extends Runnable {
     }
 
     print(s"W: ${W},  b: ${b}")
+
   }
 }

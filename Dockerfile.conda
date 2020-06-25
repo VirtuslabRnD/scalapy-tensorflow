@@ -11,10 +11,18 @@ RUN set -x \
 
 ENV PATH=/root/miniconda/bin:$PATH
 
-RUN conda install --yes --channel=conda-forge tensorflow=1.14.0 keras
+RUN conda install --yes --channel=conda-forge tensorflow=2.2.0
 
 WORKDIR /scalapy-tensorflow
 COPY . .
 RUN find .
-RUN sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.Example'
-RUN sbt 'project scalaPyTensorFlowCrossJVM' 'runMain me.shadaj.scalapy.tensorflow.example.MnistExample'
+RUN echo '-batch' > .sbtopts
+RUN sbt test
+
+RUN sbt 'project scalaPyTensorFlowCrossNative' 'run Example'
+RUN sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
+
+RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run Example'
+RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
+
+RUN sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
