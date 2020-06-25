@@ -1,8 +1,9 @@
-package me.shadaj.scalapy.tensorflow
+package me.shadaj.scalapy.tensorflow.compat.v1
 
 import me.shadaj.scalapy.numpy._
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.Writer
+import me.shadaj.scalapy.tensorflow.{Tensor, Variable}
 
 @py.native trait PythonDict[K, V] extends py.Object
 object PythonDict {

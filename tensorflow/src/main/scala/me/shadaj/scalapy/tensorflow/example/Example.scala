@@ -1,8 +1,8 @@
 package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.tensorflow.Modules._
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.Tensor
-import me.shadaj.scalapy.tensorflow.ContextManager
+import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
 object Example extends Runnable {
 
   def run(): Unit = {
@@ -22,9 +22,6 @@ object Example extends Runnable {
 
     // Loss function
     def loss = () => tf.reduce_mean(tf.square(y() - yData))
-
-    // Select optimizer SGD
-    val opt = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
     // Function to calculate gradients
     def grad(): (Tensor, Seq[Tensor]) = ContextManager.withContext( tf.GradientTape()

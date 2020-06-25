@@ -5,7 +5,7 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.TensorFlow
 import me.shadaj.scalapy.tensorflow.keras.Keras
 import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
-import me.shadaj.scalapy.tensorflow.Modules._
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import Int.int2long
 import scala.language.implicitConversions
 
