@@ -2,7 +2,7 @@ package me.shadaj.scalapy.tensorflow
 
 import me.shadaj.scalapy.py
 
-@py.native trait GradientTape extends py.Object {
+@py.native trait GradientTape extends py.Object with Context {
   // TODO: returns Tensor or None
   def gradient(target: Tensor, sources: Seq[Variable]): Seq[Tensor] = py.native
   def watch(tensor: Tensor): Unit = py.native

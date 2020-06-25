@@ -2,7 +2,7 @@ package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.tensorflow.Modules._
 import me.shadaj.scalapy.tensorflow.Tensor
-
+import me.shadaj.scalapy.tensorflow.ContextManager
 object Example extends Runnable {
 
   def run(): Unit = {
@@ -27,35 +27,29 @@ object Example extends Runnable {
     val opt = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
     // Function to calculate gradients
-    def grad(): (Tensor, Seq[Tensor]) = {
-      val tape = tf.GradientTape()
-      // init tape
-      tape.__enter__()
-
-      tape.watch(W)
-      tape.watch(b)
+    def grad(): (Tensor, Seq[Tensor]) = ContextManager.withContext( tf.GradientTape()
+      ){ tape=>
       val loss_value = loss()
       val gradients = tape.gradient(loss_value, Seq(W, b))
-      //close tape
-      tape.__exit__()
       (loss_value, gradients)
     }
+
 
     // Select optimizer SGD
     val optimizer = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
     // Initial Learning step
-    val loss_value, grads = grad()
-    println(s"Step: 0, Initial Loss: ${loss_value}")
+    val (loss_value, grads) = grad()
+    println(s"Step: 0, Initial Loss: ${loss_value.numpy()}")
     // Learning steps
     val num_epochs = 400
     for (epoch <- 1 to num_epochs) {
       val (loss_value, grads) = grad()
       optimizer.apply_gradients(grads.zip(Seq(W, b)))
       if (epoch % 50 == 0)
-        println(s"Epoch ${epoch}: Loss: ${loss_value}")
+        println(s"Epoch ${epoch}: Loss: ${loss_value.numpy()}")
     }
 
-    print(s"W: ${W},  b: ${b}")
+    print(s"W: ${W.numpy()},  b: ${b.numpy()}")
   }
 }

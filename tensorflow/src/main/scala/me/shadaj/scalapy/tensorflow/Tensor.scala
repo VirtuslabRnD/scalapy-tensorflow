@@ -1,5 +1,6 @@
 package me.shadaj.scalapy.tensorflow
 
+import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py
 
 @py.native trait Tensor extends py.Object {
@@ -26,4 +27,7 @@ import me.shadaj.scalapy.py
   def /(that: Tensor): Tensor = {
     (as[py.Dynamic] / that).as[Tensor]
   }
+
+  //unsafe but there no implicit for py.|[Double, Seq[Double]]
+  def numpy() : py.Any = py.native
 }
