@@ -65,7 +65,7 @@ script:
   - echo '-batch' > .sbtopts
   - sbt compile test
   - sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
-  - sbt 'project scalaPyTensorFlowCrossJVM'    'run Example'
+  - sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
   - sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
   - sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
 
