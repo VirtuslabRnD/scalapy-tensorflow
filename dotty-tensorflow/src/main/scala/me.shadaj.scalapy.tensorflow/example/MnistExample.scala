@@ -9,7 +9,7 @@ import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import Int.int2long
 import scala.language.implicitConversions
 
-object KerasMnistExample extends Runnable {
+object MnistExample extends Runnable {
 
   def run(): Unit = {
     val tf = tensorflow

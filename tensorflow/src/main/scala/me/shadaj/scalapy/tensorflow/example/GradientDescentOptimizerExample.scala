@@ -3,7 +3,7 @@ package me.shadaj.scalapy.tensorflow.example
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.Tensor
 import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
-object Example extends Runnable {
+object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {
     val tf = tensorflow
