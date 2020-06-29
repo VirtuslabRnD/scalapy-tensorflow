@@ -4,7 +4,8 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.compat.v1.Operation
 import me.shadaj.scalapy.tensorflow.{Tensor, Variable}
 
-@py.native trait Optimizer extends py.Object {
+@py.native
+trait Optimizer extends py.Object {
   // TODO loss should be a function () => py.Any
   def minimize(loss: py.Any, var_list: Seq[Variable]): Operation = py.native
 

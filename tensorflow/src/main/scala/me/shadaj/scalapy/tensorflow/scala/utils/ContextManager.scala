@@ -16,7 +16,7 @@ object ContextManager {
 
 }
 
-trait Context{
+trait Context {
   def __enter__(): Unit
   // we don't care about those arguments for now
   def __exit__(typ: py.Any = py.None, value: py.Any = py.None, traceback: py.Any = py.None): Unit

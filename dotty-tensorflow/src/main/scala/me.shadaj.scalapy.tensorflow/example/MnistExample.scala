@@ -24,7 +24,7 @@ object MnistExample extends Runnable {
 
     val img_rows, img_cols = 28
 
-    val mnist: Mnist  = kerasA.datasets.mnist
+    val mnist: Mnist = kerasA.datasets.mnist
     val ((x_train, y_train), (x_test, y_test)) = mnist.load_data()
 
     val (train, test, input_shape) =
@@ -61,9 +61,9 @@ object MnistExample extends Runnable {
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.25))
     model.add(layers.Flatten())
-    model.add(layers.Dense(units = 128, activation="relu"))
+    model.add(layers.Dense(units = 128, activation = "relu"))
     model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(units = num_classes.toInt, activation="softmax"))
+    model.add(layers.Dense(units = num_classes.toInt, activation = "softmax"))
 
     model.compile(
       loss = kerasA.losses.categorical_crossentropy,
@@ -71,13 +71,7 @@ object MnistExample extends Runnable {
       metrics = Seq("accuracy")
     )
 
-    model.fit(
-      x = trainImages,
-      y = trainLabels,
-      batch_size = batch_size,
-      epochs = epochs,
-      verbose = 1,
-      validation_data = (testImages, testLabels))
+    model.fit(x = trainImages, y = trainLabels, batch_size = batch_size, epochs = epochs, verbose = 1, validation_data = (testImages, testLabels))
 
     val score = model.evaluate(x = testImages, y = testLabels, verbose = 0)
 
