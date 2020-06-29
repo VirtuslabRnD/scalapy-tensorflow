@@ -6,8 +6,8 @@ import Int.int2long
 import scala.language.implicitConversions
 
 /**
- * https://keras.io/examples/imdb_bidirectional_lstm/
- */
+  * https://keras.io/examples/imdb_bidirectional_lstm/
+  */
 
 object BidirectionalLSTMExample extends Runnable {
 
@@ -30,25 +30,22 @@ object BidirectionalLSTMExample extends Runnable {
     println(s"${x_test.length} test sequences")
 
     println("Pad sequences (samples x time)")
-    val x_train1 = sequence.pad_sequences(x_train, maxlen=maxlen)
-    val x_test1 = sequence.pad_sequences(x_test, maxlen=maxlen)
+    val x_train1 = sequence.pad_sequences(x_train, maxlen = maxlen)
+    val x_test1 = sequence.pad_sequences(x_test, maxlen = maxlen)
     println(s"x_train shape: ${x_train1.shape}")
     println(s"x_test shape: ${x_test1.shape}")
     //    y_train = np.array(y_train)
     //    y_test = np.array(y_test)
     val model = keras1.models.Sequential()
-    model.add(layers.Embedding(max_features, 128, input_length=maxlen))
+    model.add(layers.Embedding(max_features, 128, input_length = maxlen))
     model.add(layers.Bidirectional(layers.LSTM(64)))
     model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(1, activation="sigmoid"))
+    model.add(layers.Dense(1, activation = "sigmoid"))
     //
     //    try using different optimizers and different optimizer configs
-    model.compile("adam", keras1.backend.binary_crossentropy, metrics=Seq("accuracy"))
+    model.compile("adam", keras1.backend.binary_crossentropy, metrics = Seq("accuracy"))
 
     println("Train...")
-    model.fit(x_train1, y_train,
-      batch_size=batch_size,
-      epochs=4,
-      validation_data=(x_test1, y_test))
+    model.fit(x_train1, y_train, batch_size = batch_size, epochs = 4, validation_data = (x_test1, y_test))
   }
 }

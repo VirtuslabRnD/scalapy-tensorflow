@@ -4,7 +4,8 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.{PyValue, Reader}
 import me.shadaj.scalapy.tensorflow.scala.utils.Context
 
-@py.native trait GradientTape extends py.Object with Context {
+@py.native
+trait GradientTape extends py.Object with Context {
   // TODO: returns Tensor or None
   def gradient(target: Tensor, sources: Seq[Variable]): Seq[Tensor] = py.native
   def watch(tensor: Tensor): Unit = py.native

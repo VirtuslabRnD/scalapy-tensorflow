@@ -17,14 +17,15 @@ package object layers {
     }
   }
 
-  implicit def noneReader[T](implicit reader: Reader[T]): Reader[py.NoneOr[T]] = new Reader[py.NoneOr[T]] {
-    override def read(v: PyValue): py.NoneOr[T] = {
-      try {
-        reader.read(v)
-      } catch {
-        // TODO: read None
-        case NonFatal(_) => py.None
+  implicit def noneReader[T](implicit reader: Reader[T]): Reader[py.NoneOr[T]] =
+    new Reader[py.NoneOr[T]] {
+      override def read(v: PyValue): py.NoneOr[T] = {
+        try {
+          reader.read(v)
+        } catch {
+          // TODO: read None
+          case NonFatal(_) => py.None
+        }
       }
     }
-  }
 }

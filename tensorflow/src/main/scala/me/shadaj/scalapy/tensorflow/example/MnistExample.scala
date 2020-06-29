@@ -65,13 +65,7 @@ object MnistExample extends Runnable {
       metrics = Seq("accuracy")
     )
 
-    model.fit(
-      x = trainImages,
-      y = trainLabels,
-      batch_size = batch_size,
-      epochs = epochs,
-      verbose = 1,
-      validation_data = (testImages, testLabels))
+    model.fit(x = trainImages, y = trainLabels, batch_size = batch_size, epochs = epochs, verbose = 1, validation_data = (testImages, testLabels))
 
     val score = model.evaluate(x = testImages, y = testLabels, verbose = 0)
 

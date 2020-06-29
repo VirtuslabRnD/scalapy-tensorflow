@@ -3,7 +3,8 @@ package layers
 
 import me.shadaj.scalapy.py
 
-@py.native trait Conv2D extends Layer {
+@py.native
+trait Conv2D extends Layer {
   def filters: Int = py.native
   def kernel_size: py.|[Int, (Int, Int)] = py.native
   def strides: py.|[Int, (Int, Int)] = py.native
