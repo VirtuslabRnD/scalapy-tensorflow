@@ -63,9 +63,10 @@ script:
 
   # -batch is necessary to make sure sbt doesn't stall waiting for user input in case of certain failures
   - echo '-batch' > .sbtopts
+  - sbt scalafmtCheck
   - sbt compile test
   - sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
-  - sbt 'project scalaPyTensorFlowCrossJVM'    'run Example'
+  - sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
   - sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
   - sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
 

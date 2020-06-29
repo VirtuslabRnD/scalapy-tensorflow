@@ -3,7 +3,8 @@ package layers
 
 import me.shadaj.scalapy.py
 
-@py.native trait Dense extends Layer {
+@py.native
+trait Dense extends Layer {
   def units: Int = py.native
   def activation: py.NoneOr[String] = py.native
   def use_bias: Boolean = py.native

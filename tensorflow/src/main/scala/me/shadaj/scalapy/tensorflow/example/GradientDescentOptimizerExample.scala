@@ -1,9 +1,9 @@
 package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.tensorflow.Modules._
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.Tensor
-import me.shadaj.scalapy.tensorflow.ContextManager
-object Example extends Runnable {
+import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
+object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {
     val tf = tensorflow
@@ -24,13 +24,12 @@ object Example extends Runnable {
     def loss = () => tf.reduce_mean(tf.square(y() - yData))
 
     // Function to calculate gradients
-    def grad(): Option[(Tensor, Seq[Tensor])] = ContextManager.withContext( tf.GradientTape()
-      ){ tape=>
-      val loss_value = loss()
-      val gradients = tape.gradient(loss_value, Seq(W, b))
-      (loss_value, gradients)
-    }
-
+    def grad(): Option[(Tensor, Seq[Tensor])] =
+      ContextManager.withContext(tf.GradientTape()) { tape =>
+        val loss_value = loss()
+        val gradients = tape.gradient(loss_value, Seq(W, b))
+        (loss_value, gradients)
+      }
 
     // Select optimizer SGD
     val optimizer = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)

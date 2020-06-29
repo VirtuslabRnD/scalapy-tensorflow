@@ -19,10 +19,10 @@ RUN find .
 RUN echo '-batch' > .sbtopts
 RUN sbt test
 
-RUN sbt 'project scalaPyTensorFlowCrossNative' 'run Example'
+RUN sbt 'project scalaPyTensorFlowCrossNative' 'run GradientDescentOptimizerExample'
 RUN sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
 
-RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run Example'
+RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
 RUN sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
 
 RUN sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'

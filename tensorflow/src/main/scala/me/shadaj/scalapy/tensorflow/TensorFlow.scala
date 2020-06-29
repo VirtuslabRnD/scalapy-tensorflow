@@ -1,28 +1,44 @@
 package me.shadaj.scalapy.tensorflow
 
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.py.{ PyFunction, Writer, | }
+import me.shadaj.scalapy.py.{PyFunction, Writer, |}
+import me.shadaj.scalapy.tensorflow.compat.v1.Compat
 import me.shadaj.scalapy.tensorflow.keras.Keras
+import me.shadaj.scalapy.tensorflow.nn.NN
+import me.shadaj.scalapy.tensorflow.random.Random
+import me.shadaj.scalapy.tensorflow.train.Train
 
 // some TensorFlow operations require a LIST list, not just something iterable
-@py.native trait PythonList[T] extends py.Object
+@py.native
+trait PythonList[T] extends py.Object
 object PythonList {
   implicit def seqToPythonList[T](seq: Seq[T])(implicit writer: Writer[Seq[T]]): PythonList[T] = {
     py.global.list(py.Any.from(seq)(writer)).as[PythonList[T]]
   }
 }
 
-@py.native trait TensorFlow extends py.Object {
-  def Variable(initialValue: Tensor): Variable = py.native
+@py.native
+trait TensorFlow extends py.Object {
 
-  def placeholder(`type`: String): Tensor = py.native
-
-  def placeholder(`type`: String, shape: Seq[py.NoneOr[Int]]): Tensor = py.native
+  // modules
 
   def keras: Keras = py.native
-  def nn: NeuralNetwork = py.native
+
+  def nn: NN = py.native
+
   def random: Random = py.native
-  def train: Training = py.native
+
+  def compat: Compat = py.native
+
+  def train: Train = py.native
+
+  // classes
+
+  def Variable(initialValue: Tensor): Variable = py.native
+
+  def GradientTape(): GradientTape = py.native
+
+  // functions
 
   def matmul(a: Tensor, b: Tensor): Tensor = py.native
 
@@ -46,17 +62,6 @@ object PythonList {
 
   def gradients(ys: Tensor, xs: Seq[Tensor], grad_ys: Tensor): Seq[Tensor] = py.native
 
-  def initialize_all_variables(): Operation = py.native
-
-  def global_variables_initializer(): Operation = py.native
-
-  def Session(): Session = py.native
-
-  def InteractiveSession(): Session = py.native
-
-  def GradientTape(): GradientTape = py.native
-
   def cond(c: Tensor, ifTrue: py.Object, ifFalse: py.Object): Tensor = py.native
 
-  def contrib: Contrib = py.native
 }

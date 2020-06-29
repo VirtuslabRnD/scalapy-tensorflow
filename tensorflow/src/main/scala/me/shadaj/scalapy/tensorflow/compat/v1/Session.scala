@@ -1,17 +1,20 @@
-package me.shadaj.scalapy.tensorflow
+package me.shadaj.scalapy.tensorflow.compat.v1
 
 import me.shadaj.scalapy.numpy._
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.Writer
+import me.shadaj.scalapy.tensorflow.{Tensor, Variable}
 
-@py.native trait PythonDict[K, V] extends py.Object
+@py.native
+trait PythonDict[K, V] extends py.Object
 object PythonDict {
   implicit def mapToPythonDict[K, V](map: Map[K, V])(implicit writer: Writer[Map[K, V]]): PythonDict[K, V] = {
     py.global.dict(map).as[PythonDict[K, V]]
   }
 }
 
-@py.native trait Session extends py.Object {
+@py.native
+trait Session extends py.Object {
   def run(fetches: Operation): Unit = py.native
 
   def run(fetches: Variable): Seq[Double] = py.native

@@ -11,3 +11,6 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.5.0")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.2")
 
 addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.4.0")
+
+// "2.4.0" is just sbt plugin version and NOT scalafmt version itself
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.0")
