@@ -30,7 +30,7 @@ object GradientDescentOptimizerExample extends Runnable {
     val opt = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
     // Function to calculate gradients
-    def grad(): (Tensor, Seq[Tensor]) = ContextManager.withContext(tf.GradientTape()){ tape =>
+    def grad(): Option[(Tensor, Seq[Tensor])] = ContextManager.withContext(tf.GradientTape()){ tape =>
       val loss_value = loss()
       val gradients = tape.gradient(loss_value, Seq(W, b))
       (loss_value, gradients)
@@ -41,12 +41,12 @@ object GradientDescentOptimizerExample extends Runnable {
     val optimizer = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
     // Initial Learing step
-    val (loss_value, grads) = grad()
+    val (loss_value, grads)= grad().get
     println(s"Step: 0, Initial Loss: ${loss_value.numpy()}")
     // Learning steps
     val num_epochs = 400
     for (epoch <- 1 to num_epochs) {
-      val (loss_value, grads) = grad()
+      val (loss_value, grads) = grad().get
       optimizer.apply_gradients(grads.zip(Seq(W, b)))
       if (epoch % 50 == 0)
         println(s"Epoch ${epoch}: Loss: ${loss_value.numpy()}")
