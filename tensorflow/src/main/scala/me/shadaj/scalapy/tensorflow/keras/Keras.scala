@@ -10,9 +10,10 @@ import me.shadaj.scalapy.tensorflow.keras.utils.Utils
 import me.shadaj.scalapy.tensorflow.keras.losses.Losses
 import me.shadaj.scalapy.tensorflow.keras.layers.Layers
 import me.shadaj.scalapy.tensorflow.keras.preprocessing.Preprocessing
+import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
 
 @py.native
-trait Keras extends py.Object {
+trait Keras extends py.Object with PythonModule {
   def models: Models = py.native
   def datasets: Datasets = py.native
   def backend: Backend = py.native

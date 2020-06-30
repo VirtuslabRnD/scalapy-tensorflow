@@ -3,9 +3,10 @@ package me.shadaj.scalapy.tensorflow.keras.layers
 import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Tensor
+import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
 
 @py.native
-trait Layers extends py.Object {
+trait Layers extends py.Object with PythonModule {
   def Conv2D(
       filters: Int,
       kernel_size: py.|[Int, (Int, Int)],
