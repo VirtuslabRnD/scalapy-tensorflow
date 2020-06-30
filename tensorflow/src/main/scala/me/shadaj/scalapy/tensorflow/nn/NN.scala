@@ -3,9 +3,10 @@ package me.shadaj.scalapy.tensorflow.nn
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.PyFunction
 import me.shadaj.scalapy.tensorflow.Tensor
+import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
 
 @py.native
-trait NN extends py.Object {
+trait NN extends py.Object with PythonModule {
   def relu: PyFunction = py.native
   def relu(features: Tensor): Tensor = py.native
 

@@ -2,7 +2,7 @@ package me.shadaj.scalapy.tensorflow
 
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.py.{PyFunction, Writer, |}
-import me.shadaj.scalapy.tensorflow.compat.v1.Compat
+import me.shadaj.scalapy.tensorflow.compat.Compat
 import me.shadaj.scalapy.tensorflow.keras.Keras
 import me.shadaj.scalapy.tensorflow.nn.NN
 import me.shadaj.scalapy.tensorflow.random.Random
