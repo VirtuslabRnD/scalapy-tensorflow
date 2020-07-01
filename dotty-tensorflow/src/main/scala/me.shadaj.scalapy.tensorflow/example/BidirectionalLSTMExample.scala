@@ -46,6 +46,7 @@ object BidirectionalLSTMExample extends Runnable {
     model.compile("adam", keras1.backend.binary_crossentropy, metrics = Seq("accuracy"))
 
     println("Train...")
-    model.fit(x_train1, y_train, batch_size = batch_size, epochs = 4, validation_data = (x_test1, y_test))
+    val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)
+    model.fit(x_train1, y_train, batch_size = batch_size, epochs = epochs, validation_data = (x_test1, y_test))
   }
 }

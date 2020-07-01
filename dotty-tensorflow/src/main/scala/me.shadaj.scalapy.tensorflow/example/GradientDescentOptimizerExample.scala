@@ -41,11 +41,11 @@ object GradientDescentOptimizerExample extends Runnable {
     // Select optimizer SGD
     val optimizer = tf.keras.optimizers.SGD(learning_rate = 0.1, momentum = 0.9)
 
-    // Initial Learing step
+    // Initial learning step
     val (loss_value, grads) = grad().get
     println(s"Step: 0, Initial Loss: ${loss_value.numpy()}")
     // Learning steps
-    val num_epochs = 400
+    val num_epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(400)
     for (epoch <- 1 to num_epochs) {
       val (loss_value, grads) = grad().get
       optimizer.apply_gradients(grads.zip(Seq(W, b)))

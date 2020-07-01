@@ -65,10 +65,12 @@ script:
   - echo '-batch' > .sbtopts
   - sbt scalafmtCheck
   - sbt compile test
-  - sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
-  - sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
-  - sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
-  - sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
+  # We're keeping the number of epochs deliberately low -
+  # the CI runs of the examples serve rather as smoke tests to spot linking/Python invocation errors.
+  - EPOCH_COUNT=1  sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
+  - EPOCH_COUNT=40 sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
+  - EPOCH_COUNT=1  sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
+  - EPOCH_COUNT=40 sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
 
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'

@@ -39,7 +39,7 @@ object GradientDescentOptimizerExample extends Runnable {
     println(s"Step: 0, Initial Loss: ${loss_value.numpy()}")
 
     // Learning steps
-    val num_epochs = 400
+    val num_epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(400)
     for (epoch <- 1 to num_epochs) {
       val (loss_value, grads) = grad().get
       optimizer.apply_gradients(grads.zip(Seq(W, b)))

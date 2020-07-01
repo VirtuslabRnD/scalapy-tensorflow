@@ -20,7 +20,7 @@ object MnistExample extends Runnable {
 
     val batch_size = 128
     val num_classes = 10L
-    val epochs = 2
+    val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(2)
 
     val img_rows, img_cols = 28
 
