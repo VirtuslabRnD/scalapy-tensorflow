@@ -55,22 +55,31 @@ jobs:
 
 script:
   # TODO remove once the updated scalapy-core is published
-  - git clone https://github.com/VirtuslabRnD/scalapy.git
-  - cd scalapy
+  - git clone https://github.com/VirtuslabRnD/scalapy.git ~/scalapy
+  - cd ~/scalapy
   - git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f
   - sbt publishLocal
-  - cd ..
+  - cd -
+
+  # TODO remove once the updated scalapy-numpy is published
+  - git clone https://github.com/VirtuslabRnD/scalapy-numpy.git ~/scalapy-numpy
+  - cd ~/scalapy-numpy
+  - git checkout 290f7bf1
+  - sbt publishLocal
+  - cd -
 
   # -batch is necessary to make sure sbt doesn't stall waiting for user input in case of certain failures
   - echo '-batch' > .sbtopts
   - sbt scalafmtCheck
   - sbt compile test
-  # We're keeping the number of epochs deliberately low -
+  # We're keeping the number of epochs and training data size deliberately low -
   # the CI runs of the examples serve rather as smoke tests to spot linking/Python invocation errors.
-  - EPOCH_COUNT=1  sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
-  - EPOCH_COUNT=40 sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
-  - EPOCH_COUNT=1  sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
-  - EPOCH_COUNT=40 sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
+  - export EPOCH_COUNT=40
+  - sbt 'project scalaPyTensorFlowCrossJVM'    'run GradientDescentOptimizerExample'
+  - sbt 'project dottyTensorflow'              'run GradientDescentOptimizerExample'
+  - export EPOCH_COUNT=1 TRAINING_SET_SIZE=1000
+  - sbt 'project scalaPyTensorFlowCrossNative' 'run MnistExample'
+  - sbt 'project scalaPyTensorFlowCrossJVM'    'run MnistExample'
 
 after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then bash ./publish.sh; fi'

@@ -19,7 +19,10 @@ object MnistExample extends Runnable {
     val img_rows, img_cols = 28
 
     val mnist: Mnist = keras.datasets.mnist
-    val ((x_train, y_train), (x_test, y_test)) = mnist.load_data()
+    val ((x_train_orig, y_train_orig), (x_test, y_test)) = mnist.load_data()
+    val trainingSetSize = Option(System.getenv("TRAINING_SET_SIZE")).map(_.toInt)
+    val x_train = trainingSetSize.map(tss => x_train_orig.slice(0, tss)).getOrElse(x_train_orig)
+    val y_train = trainingSetSize.map(tss => y_train_orig.slice(0, tss)).getOrElse(y_train_orig)
 
     val (train, test, input_shape) =
       if (K.image_data_format() == "channels_first") {
