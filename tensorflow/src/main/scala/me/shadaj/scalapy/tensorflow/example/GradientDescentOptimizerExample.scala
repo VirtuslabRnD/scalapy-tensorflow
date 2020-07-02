@@ -3,6 +3,8 @@ package me.shadaj.scalapy.tensorflow.example
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.Tensor
 import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
+import me.shadaj.scalapy.tensorflow._
+
 object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {
@@ -11,7 +13,7 @@ object GradientDescentOptimizerExample extends Runnable {
 
     // Starting data
     val xData = np.random.rand(100).astype(np.float32)
-    val yData = (xData * 0.1) + 0.3
+    val yData = (xData * 0.1f) + 0.3f
 
     // Variables
     val W = tf.Variable(tf.random.uniform(shape = Seq(1), minval = -1, maxval = 1))

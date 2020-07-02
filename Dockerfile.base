@@ -24,6 +24,13 @@ RUN set -x \
   && git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f \
   && sbt publishLocal
 
+RUN set -x \
+  && git clone https://github.com/VirtuslabRnD/scalapy-numpy.git \
+  && cd scalapy-numpy \
+  && git checkout fcdd3126c81632b78d547d227405823c0a22e1b1 \
+  && sbt publishLocal
+
+
 # Prerequisites of Scala Native
 RUN set -x \
   && apt-get update \
