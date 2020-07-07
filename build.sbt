@@ -11,6 +11,7 @@ lazy val dottyVersion = "0.24.0-RC1"
 organization in ThisBuild := "me.shadaj"
 scalaVersion in ThisBuild := scala212Version
 
+resolvers in ThisBuild += "jitpack" at "https://jitpack.io"
 
 addCommandAlias(
   "publishSignedAll",
@@ -40,8 +41,7 @@ lazy val dottyTensorflow = project
   .settings(
     name := "dotty-tensorflow",
     scalaVersion := dottyVersion,
-    // ScalaPy:
-    libraryDependencies += "me.shadaj" % "scalapy-core_2.13" % "0.3.0+38-2597f7b2",
+    libraryDependencies += "com.github.VirtuslabRnD.scalapy" % "scalapy-core_2.13" % "2597f7b23301ddd59067de24d4d3809cf475ae9f",
     fork := true,
     javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
@@ -54,10 +54,8 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
   .settings(
     name := "scalapy-tensorflow-cross",
     // scalapy-core version will replace the one in scalapy-numpy (maintaining binary compatibility)
-    libraryDependencies += "me.shadaj" %%% "scalapy-core" % "0.3.0+38-2597f7b2",
-    libraryDependencies += "me.shadaj" %%% "scalapy-numpy" % "0.1.0+7-290f7bf1" exclude("me.shadaj", "scalapy-core"),
-    // 3.2.0-SNAP10 is the latest version of scalatest for which a scala-native is available for Scala 2.11.
-    // Unfortunately, no stable version of scalatest seems to be available on Maven Central for scala-native :(
+    libraryDependencies += "com.github.VirtuslabRnD.scalapy" %%% "scalapy-core" % "2597f7b23301ddd59067de24d4d3809cf475ae9f",
+    libraryDependencies += "com.github.VirtuslabRnD.scalapy-numpy" %%% "scalapy-numpy" % "290f7bf127570441c23629d1500fbddb0a8213c9" exclude("me.shadaj", "scalapy-core"),
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
   ).jvmSettings(
     scalaVersion := scala213Version,
