@@ -2,9 +2,9 @@ package me.shadaj.scalapy.tensorflow.random
 
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
-import me.shadaj.scalapy.tensorflow.{PythonList, Tensor}
+import me.shadaj.scalapy.tensorflow.Tensor
 
 @py.native
 trait Random extends py.Object with PythonModule {
-  def uniform(shape: PythonList[Int], minval: Double, maxval: Double): Tensor = py.native
+  def uniform(shape: Seq[Int], minval: Double, maxval: Double): Tensor = py.native
 }
