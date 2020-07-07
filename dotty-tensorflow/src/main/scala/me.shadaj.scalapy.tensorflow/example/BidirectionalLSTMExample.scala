@@ -13,8 +13,8 @@ import scala.language.implicitConversions
 object BidirectionalLSTMExample extends Runnable {
 
   def run() = {
-    val tf = tensorflow
-    val np = numpy
+    val tf = Modules.tensorflow
+    val np = Modules.numpy
     val keras1 = tf.keras
     val layers = keras1.layers
     val imdb = keras1.datasets.imdb
