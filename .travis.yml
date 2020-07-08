@@ -54,18 +54,6 @@ jobs:
         - source ci/travis-install-conda.sh
 
 script:
-  # TODO remove once the updated scalapy-core is published
-  - git clone https://github.com/VirtuslabRnD/scalapy.git
-  - cd scalapy
-  - git checkout 2597f7b23301ddd59067de24d4d3809cf475ae9f
-  - sbt publishLocal
-  - cd ..
-  - git clone https://github.com/VirtuslabRnD/scalapy-numpy.git
-  - cd scalapy-numpy
-  - git checkout fcdd3126c81632b78d547d227405823c0a22e1b1
-  - sbt publishLocal
-  - cd ..
-
   # -batch is necessary to make sure sbt doesn't stall waiting for user input in case of certain failures
   - echo '-batch' > .sbtopts
   - sbt scalafmtCheck
