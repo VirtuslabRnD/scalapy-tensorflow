@@ -36,13 +36,13 @@ trait Sequential extends py.Object {
 
   def fit(
       x: NDArray[Float],
-      y: NDArray[Long],
+      y: NDArray[Float],
       batch_size: py.NoneOr[Int] = py.None,
       epochs: Int = 1,
       verbose: Int = 1,
-      validation_data: py.NoneOr[(NDArray[Float], NDArray[Long])] = py.None
+      validation_data: py.NoneOr[(NDArray[Float], NDArray[Float])] = py.None
   ): Unit = origDynamic.fit(x = x, y = y, batch_size = batch_size, epochs = epochs, verbose = verbose, validation_data = validation_data).as[Unit]
 
-  def evaluate(x: NDArray[Float], y: NDArray[Long], batch_size: py.NoneOr[Int] = py.None, verbose: Int = 1): Seq[Double] =
+  def evaluate(x: NDArray[Float], y: NDArray[Float], batch_size: py.NoneOr[Int] = py.None, verbose: Int = 1): Seq[Double] =
     origDynamic.evaluate(x = x, y = y, batch_size = batch_size, verbose = verbose).as[Seq[Double]]
 }

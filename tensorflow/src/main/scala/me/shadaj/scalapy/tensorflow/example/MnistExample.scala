@@ -47,8 +47,8 @@ object MnistExample extends Runnable {
     println(s"${trainImages.shape(0)} train samples")
     println(s"${testImages.shape(0)} test samples")
 
-    val trainLabels = keras.utils.to_categorical(y_train, num_classes)
-    val testLabels = keras.utils.to_categorical(y_test, num_classes)
+    val trainLabels = keras.utils.to_categorical(y_train, num_classes).astype(np.float32)
+    val testLabels = keras.utils.to_categorical(y_test, num_classes).astype(np.float32)
 
     val model = keras.models.Sequential()
     model.add(

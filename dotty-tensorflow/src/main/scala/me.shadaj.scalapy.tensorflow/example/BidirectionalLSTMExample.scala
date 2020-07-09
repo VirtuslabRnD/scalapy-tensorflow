@@ -33,6 +33,8 @@ object BidirectionalLSTMExample extends Runnable {
     println("Pad sequences (samples x time)")
     val x_train1 = sequence.pad_sequences(x_train, maxlen = maxlen).astype(np.float32)
     val x_test1 = sequence.pad_sequences(x_test, maxlen = maxlen).astype(np.float32)
+    val y_train1 = y_train.astype(np.float32)
+    val y_test1 = y_test.astype(np.float32)
     println(s"x_train shape: ${x_train1.shape}")
     println(s"x_test shape: ${x_test1.shape}")
 
@@ -47,6 +49,6 @@ object BidirectionalLSTMExample extends Runnable {
 
     println("Train...")
     val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)
-    model.fit(x_train1, y_train, batch_size = batch_size, epochs = epochs, validation_data = (x_test1, y_test))
+    model.fit(x_train1, y_train1, batch_size = batch_size, epochs = epochs, validation_data = (x_test1, y_test1))
   }
 }
