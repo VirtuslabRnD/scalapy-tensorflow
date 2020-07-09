@@ -15,7 +15,7 @@ object GradientDescentOptimizerExample extends Runnable {
 
     // Starting data
     val xData = np.random.rand(100).astype(np.float32)
-    val yData = (xData * 0.1) + 0.3
+    val yData = (xData * 0.1f) + 0.3f
 
     // Variables
     val W = tf.Variable(tf.random.uniform(shape = Seq(1), minval = -1, maxval = 1))

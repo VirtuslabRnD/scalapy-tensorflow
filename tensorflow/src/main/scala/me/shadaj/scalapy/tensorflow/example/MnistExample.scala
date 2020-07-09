@@ -40,15 +40,15 @@ object MnistExample extends Runnable {
       }
 
     // TODO: not type safe
-    val trainImages = train.astype(np.float32) / 255
-    val testImages = test.astype(np.float32) / 255
+    val trainImages = train.astype(np.float32) / 255.0f
+    val testImages = test.astype(np.float32) / 255.0f
 
     println(s"x_train shape: ${trainImages.shape}")
     println(s"${trainImages.shape(0)} train samples")
     println(s"${testImages.shape(0)} test samples")
 
-    val trainLabels = keras.utils.to_categorical(y_train, num_classes)
-    val testLabels = keras.utils.to_categorical(y_test, num_classes)
+    val trainLabels = keras.utils.to_categorical(y_train, num_classes).astype(np.float32)
+    val testLabels = keras.utils.to_categorical(y_test, num_classes).astype(np.float32)
 
     val model = keras.models.Sequential()
     model.add(

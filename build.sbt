@@ -55,7 +55,7 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
     name := "scalapy-tensorflow-cross",
     // scalapy-core version will replace the one in scalapy-numpy (maintaining binary compatibility)
     libraryDependencies += "com.github.VirtuslabRnD.scalapy" %%% "scalapy-core" % "2597f7b23301ddd59067de24d4d3809cf475ae9f",
-    libraryDependencies += "com.github.VirtuslabRnD.scalapy-numpy" %%% "scalapy-numpy" % "290f7bf127570441c23629d1500fbddb0a8213c9" exclude("me.shadaj", "scalapy-core"),
+    libraryDependencies += "com.github.VirtuslabRnD.scalapy-numpy" %%% "scalapy-numpy" % "8a85b7068e9a377ba4b97e2cf9b7bbe008066202" exclude("me.shadaj", "scalapy-core"),
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
   ).jvmSettings(
     scalaVersion := scala213Version,

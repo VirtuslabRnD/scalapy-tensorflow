@@ -6,11 +6,11 @@ import me.shadaj.scalapy.py.Writer
 import scala.language.implicitConversions
 
 package object tensorflow {
-  implicit def double2Tensor(d: Double): Tensor = {
-    py.Any.from(d)(Writer.doubleWriter).as[Tensor]
+  implicit def float2Tensor(d: Float): Tensor = {
+    py.Any.from(d)(Writer.floatWriter).as[Tensor]
   }
 
-  implicit def nd2Tensor(nd: NDArray[Double]): Tensor = {
+  implicit def nd2Tensor(nd: NDArray[Float]): Tensor = {
     nd.as[Tensor]
   }
 }
