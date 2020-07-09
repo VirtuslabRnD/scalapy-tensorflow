@@ -1,8 +1,7 @@
 package me.shadaj.scalapy.tensorflow.api.keras.optimizers
 
-
 import me.shadaj.scalapy.tensorflow.api.Tensor
-import me.shadaj.scalapy.tensorflow.keras.optimizers.{ Optimizers => PyOptimizers}
+import me.shadaj.scalapy.tensorflow.keras.optimizers.{Optimizers => PyOptimizers}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.{PythonModule, PythonType}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption
 import scala.language.implicitConversions

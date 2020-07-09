@@ -51,22 +51,9 @@ class TensorFlow {
 
   def reduceMean(t: Tensor): Tensor = tf.reduce_mean(t)
 
-  // def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Seq[Tensor] = (ys, xs) match {
-  //   case (ys: Tensor, xs: Tensor) => tf.gradients(ys.underlying, xs.underlying).map(new Tensor(_))
-  //   case (ys: Seq[Tensor], xs: Tensor) => tf.gradients(ys.map(_.underlying), xs.underlying).map(new Tensor(_))
-  //   case (ys: Tensor, xs: Seq[Tensor]) => tf.gradients(ys.underlying, xs.map(_.underlying)).map(new Tensor(_))
-  //   case (ys: Seq[Tensor], xs: Seq[Tensor]) => tf.gradients(ys.map(_.underlying), xs.map(_.underlying)).map(new Tensor(_))
-  // }
-
   def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Seq[Tensor] = {
     tf.gradients(PythonUnion.convertSeq(ys), PythonUnion.convertSeq(xs)).map(new Tensor(_))
   }
-
-  // def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Unit = {
-  //   val x: py.|[PyTensor, Seq[PyTensor]] = PythonUnion.convert2Seq(ys)
-  //   println("VALUE:\t" + x.value)
-
-  // }
 
   def gradients(ys: Tensor, xs: Seq[Tensor], gradYs: Tensor): Seq[Tensor] = tf.gradients(ys, xs.map(_.underlying), gradYs).map(new Tensor(_))
 
