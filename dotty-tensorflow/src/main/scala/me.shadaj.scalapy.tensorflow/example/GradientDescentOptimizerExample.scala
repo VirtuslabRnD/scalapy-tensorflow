@@ -20,8 +20,8 @@ object GradientDescentOptimizerExample extends Runnable {
     val yData = (xData * 0.1f) + 0.3f
 
     // Variables
-    val W = tf.Variable(tf.random.uniform(shape = Seq(1), minval = -1, maxval = 1))
-    val b = tf.Variable(tf.zeros(Seq(1)))
+    var W = tf.Variable(tf.random.uniform(shape = Seq(1), minval = -1, maxval = 1))
+    var b = tf.Variable(tf.zeros(Seq(1)))
 
     // Function to calculate output
     def y = () => W * xData + b
@@ -47,7 +47,9 @@ object GradientDescentOptimizerExample extends Runnable {
     val num_epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(400)
     for (epoch <- 1 to num_epochs) {
       val (lossValue, grads) = grad().get
-      optimizer.applyGradients(grads.zip(Seq(W, b)))
+      val (vars, _) = optimizer.applyGradients(grads.zip(Seq(W, b)))
+      W = tf.Variable(vars(0))
+      b = tf.Variable(vars(1))
       if (epoch % 50 == 0)
         println(s"Epoch ${epoch}: Loss: ${lossValue.numpy()}")
     }
