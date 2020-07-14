@@ -7,6 +7,7 @@ import keras.Keras
 import compat.Compat
 import scala.language.implicitConversions
 import scalaUtils._
+import me.shadaj.scalapy.tensorflow.seq2Tensor
 
 import me.shadaj.scalapy.py.PyFunction
 import me.shadaj.scalapy.py
@@ -41,7 +42,7 @@ class TensorFlow {
 
   def zeros(shape: Seq[Int]): Tensor = tf.zeros(shape)
 
-  def reshape(tensor: Tensor, shape: Tensor): Tensor = tf.reshape(tensor, shape)
+  def reshape(tensor: Tensor, shape: Seq[Int]): Tensor = tf.reshape(tensor, shape)
 
   def addN(ts: Seq[Tensor]): Tensor = tf.add_n(ts.map(_.underlying))
 
