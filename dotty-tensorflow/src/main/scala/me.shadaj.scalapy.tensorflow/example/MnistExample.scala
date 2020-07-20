@@ -2,79 +2,77 @@ package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.numpy.NumPy
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.tensorflow.TensorFlow
-import me.shadaj.scalapy.tensorflow.keras.Keras
-import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
+import me.shadaj.scalapy.tensorflow.api.TensorFlow
+import me.shadaj.scalapy.tensorflow.api.keras.datasets.Mnist
 import Int.int2long
 import scala.language.implicitConversions
 
 object MnistExample extends Runnable {
 
   def run(): Unit = {
-    val tf = tensorflow
+    val tf = new TensorFlow()
     val np = numpy
     val kerasA = tf.keras
     val K = kerasA.backend
     val layers = kerasA.layers
 
-    val batch_size = 128
-    val num_classes = 10L
+    val batchSize = 128
+    val numClasses = 10L
     val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(2)
 
-    val img_rows, img_cols = 28
+    val imgRows, imgCols = 28
 
     val mnist: Mnist = kerasA.datasets.mnist
-    val ((x_train_orig, y_train_orig), (x_test, y_test)) = mnist.load_data()
+    val ((xTrainOrig, yTrainOrig), (xTest, yTest)) = mnist.loadData()
     val trainingSetSize = Option(System.getenv("TRAINING_SET_SIZE")).map(_.toInt)
-    val x_train = trainingSetSize.map(tss => x_train_orig.slice(0, tss)).getOrElse(x_train_orig)
-    val y_train = trainingSetSize.map(tss => y_train_orig.slice(0, tss)).getOrElse(y_train_orig)
+    val xTrain = trainingSetSize.map(tss => xTrainOrig.slice(0, tss)).getOrElse(xTrainOrig)
+    val yTrain = trainingSetSize.map(tss => yTrainOrig.slice(0, tss)).getOrElse(yTrainOrig)
 
-    val (train, test, input_shape) =
-      if (K.image_data_format == "channels_first") {
-        val train = x_train.reshape(Seq(x_train.shape(0), 1, img_rows, img_cols))
-        val test = x_test.reshape(Seq(x_test.shape(0), 1, img_rows, img_cols))
-        val input_shape = (1, img_rows, img_cols)
+    val (train, test, inputShape) =
+      if (K.imageDataFormat == "channels_first") {
+        val train = xTrain.reshape(Seq(xTrain.shape(0), 1, imgRows, imgCols))
+        val test = xTest.reshape(Seq(xTest.shape(0), 1, imgRows, imgCols))
+        val inputShape = (1, imgRows, imgCols)
 
-        (train, test, input_shape)
+        (train, test, inputShape)
       } else {
-        val train = x_train.reshape(Seq(x_train.shape(0), img_rows, img_cols, 1))
-        val test = x_test.reshape(Seq(x_test.shape(0), img_rows, img_cols, 1))
-        val input_shape = (img_rows, img_cols, 1)
+        val train = xTrain.reshape(Seq(xTrain.shape(0), imgRows, imgCols, 1))
+        val test = xTest.reshape(Seq(xTest.shape(0), imgRows, imgCols, 1))
+        val inputShape = (imgRows, imgCols, 1)
 
-        (train, test, input_shape)
+        (train, test, inputShape)
       }
 
-    // TODO: not type safe
     val trainImages = train.astype(np.float32) / 255.0f
     val testImages = test.astype(np.float32) / 255.0f
 
-    println(s"x_train shape: ${trainImages.shape}")
+    println(s"xTrain shape: ${trainImages.shape}")
     println(s"${trainImages.shape(0)} train samples")
     println(s"${testImages.shape(0)} test samples")
 
-    val trainLabels = kerasA.utils.to_categorical(y_train, num_classes).astype(np.float32)
-    val testLabels = kerasA.utils.to_categorical(y_test, num_classes).astype(np.float32)
+    val trainLabels = kerasA.utils.toCategorical(yTrain, Some(numClasses)).astype(np.float32)
+    val testLabels = kerasA.utils.toCategorical(yTest, Some(numClasses)).astype(np.float32)
 
     val model = kerasA.models.Sequential()
     model.add(
-      layers.Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu", kwargs = Map("input_shape" -> input_shape))
+      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some("relu"), kwargs = Map("inputShape" -> inputShape))
     )
-    model.add(layers.Conv2D(filters = 64, kernel_size = (3, 3), activation = "relu"))
+    model.add(layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some("relu")))
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.25))
     model.add(layers.Flatten())
-    model.add(layers.Dense(units = 128, activation = "relu"))
+    model.add(layers.Dense(units = 128, activation = Some("relu")))
     model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(units = num_classes.toInt, activation = "softmax"))
+    model.add(layers.Dense(units = numClasses.toInt, activation = Some("softmax")))
 
     model.compile(
-      loss = kerasA.losses.categorical_crossentropy,
+      loss = Some(kerasA.losses.categoricalCrossentropy),
       optimizer = kerasA.optimizers.Adadelta(),
       metrics = Seq("accuracy")
     )
 
-    model.fit(x = trainImages, y = trainLabels, batch_size = batch_size, epochs = epochs, verbose = 1, validation_data = (testImages, testLabels))
+    model.fit(x = trainImages, y = trainLabels, batchSize = Some(batchSize), epochs = epochs, verbose = 1, validationData = Some((testImages, testLabels)))
 
     val score = model.evaluate(x = testImages, y = testLabels, verbose = 0)
 

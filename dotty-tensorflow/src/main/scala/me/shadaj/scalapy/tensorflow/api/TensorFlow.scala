@@ -5,6 +5,8 @@ import me.shadaj.scalapy.tensorflow.{TensorFlow => PyTensorFlow, Tensor => PyTen
 import random.Random
 import keras.Keras
 import compat.Compat
+import nn.NN
+import train.Train
 import scala.language.implicitConversions
 import scalaUtils.PythonOption._
 import scalaUtils.PythonUnion._
@@ -19,9 +21,13 @@ object TensorFlow {
 
   def keras: Keras = new Keras(tf.keras)
 
+  def nn: NN = new NN(tf.nn)
+
   def random: Random = new Random(tf.random)
 
   def compat: Compat = new Compat(tf.compat)
+
+  def train: Train = new Train(tf.train)
 
   // classes
 
