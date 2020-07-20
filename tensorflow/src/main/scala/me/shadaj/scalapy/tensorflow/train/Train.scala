@@ -6,6 +6,6 @@ import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
 @py.native
 trait Train extends py.Object with PythonModule {
 
-  def ExponentialMovingAverage(): ExponentialMovingAverage = py.native
+  def ExponentialMovingAverage: ExponentialMovingAverage = py.native
 
 }
