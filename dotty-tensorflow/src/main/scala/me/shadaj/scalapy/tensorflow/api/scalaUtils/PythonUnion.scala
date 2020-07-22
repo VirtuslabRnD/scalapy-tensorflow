@@ -6,6 +6,14 @@ import scala.reflect.ClassTag
 
 object PythonUnion {
 
+  implicit def fromEnumPythonTypeUnion[A <: PythonEnum, X <: py.Any, B <: PythonType[X]](u: A | B)(implicit ev1: ClassTag[A], ev2: ClassTag[B]): py.|[String, X] = {
+    u match {
+      case a: A => py.|.fromLeft(a.v)
+      case b: B => py.|.fromRight(b.underlying)
+      case _    => throw new IllegalArgumentException()
+    }
+  }
+
   def fromPythonTypeAndScalaTypeUnion[X <: py.Any, A <: PythonType[X], B <: Any](u: A | B)(implicit ev1: ClassTag[A], ev2: ClassTag[B]): py.|[B, X] =
     u match {
       case a: A => py.|.fromRight(a.underlying)

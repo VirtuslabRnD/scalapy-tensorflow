@@ -4,6 +4,8 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonType
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonUnion._
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum._
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum
 import me.shadaj.scalapy.tensorflow.api.keras.layers._
 import me.shadaj.scalapy.tensorflow.api.keras.optimizers._
 import me.shadaj.scalapy.numpy.NDArray
@@ -15,7 +17,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
   def add(layer: Layer): Unit = underlying.add(layer.underlying)
 
   def compile(
-      optimizer: String | Optimizer = "rmsprop",
+      optimizer: OptimizerNames | Optimizer = OptimizerNames.RMSprop,
       loss: Option[PyFunction] = None,
       metrics: Seq[String] = Seq.empty,
       lossWeights: Option[Seq[(Double, Double)]] = None,
@@ -24,7 +26,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
       targetTensors: Option[String] = None
   ) =
     underlying.compile(
-      fromPythonTypeAndScalaTypeUnion(optimizer),
+      fromEnumPythonTypeUnion(optimizer),
       loss,
       metrics,
       lossWeights,

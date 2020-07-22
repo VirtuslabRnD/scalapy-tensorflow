@@ -3,18 +3,39 @@ import me.shadaj.scalapy.tensorflow.keras.layers.{Layers => PyLayers}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.{PythonModule, PythonType}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonUnion._
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum._
 import scala.language.implicitConversions
 import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.tensorflow.api.Tensor
 import me.shadaj.scalapy.tensorflow.api.Tensor._
 import me.shadaj.scalapy.py
 
+
+
+enum Padding(override private[api] val v: String) extends PythonEnum(v){
+  case Valid   extends Padding("valid")
+  case Same    extends Padding("same")
+}
+
+enum DataFormat(override private[api] val v: String) extends PythonEnum(v){
+  case ChannelsLast   extends DataFormat("channels_last")
+  case ChannelsFirst  extends DataFormat("channels_first")
+}
+
+enum MergeMode(override private[api] val v: String) extends PythonEnum(v){
+  case Sum   extends MergeMode("sum")
+  case Mul  extends MergeMode("mul")
+  case Concat  extends MergeMode("concat")
+  case Ave  extends MergeMode("ave")
+}
+
 class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLayers] {
   def Conv2D(
       filters: Int,
       kernelSize: Int | (Int, Int),
       strides: Int | (Int, Int) = (1, 1),
-      padding: String = "valid",
+      padding: Padding = Padding.Valid,
       dataFormat: Option[String] = None,
       dilationRate: Int | (Int, Int) = (1, 1),
       activation: Option[String] = None,
@@ -55,11 +76,11 @@ class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLaye
   def MaxPooling2D(
       poolSize: (Int, Int),
       strides: Option[Int | (Int, Int)] = None,
-      padding: String = "valid",
-      dataFormat: Option[String] = None
-  ): MaxPooling2D = new MaxPooling2D(underlying.MaxPooling2D(poolSize, option2PyOption(strides.map(fromScalaTypesUnion(_))), padding, dataFormat))
+      padding: Padding = Padding.Valid,
+      dataFormat: Option[DataFormat] = None
+  ): MaxPooling2D = new MaxPooling2D(underlying.MaxPooling2D(poolSize, option2PyOption(strides.map(fromScalaTypesUnion(_))), padding, pyOption2Option(dataFormat).map(_.v)))
 
-  def Flatten(dataFormat: Option[String] = None): Flatten = new Flatten(underlying.Flatten(dataFormat))
+  def Flatten(dataFormat: Option[DataFormat] = None): Flatten = new Flatten(underlying.Flatten(pyOption2Option(dataFormat).map(_.v)))
 
   def Dense(
       units: Int,
@@ -115,7 +136,7 @@ class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLaye
 
   def Bidirectional(
       layer: Layer,
-      mergeMode: String = "concat",
+      mergeMode: MergeMode = MergeMode.Concat,
       weights: Option[NDArray[Int]] = None,
       kwargs: Map[String, py.Any] = Map()
   ): Bidirectional = new Bidirectional(underlying.Bidirectional(layer.underlying, mergeMode, weights, kwargs))
