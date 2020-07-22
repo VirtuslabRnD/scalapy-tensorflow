@@ -9,8 +9,8 @@ class Conv2D private[api] (override val underlying: PyConv2D) extends Layer(unde
   def filters: Int = underlying.filters
   def kernelSize: Int | (Int, Int) = underlying.kernel_size
   def strides: Int | (Int, Int) = underlying.strides
-  def padding: String = underlying.padding
-  def dataFormat: Option[String] = underlying.data_format
+  def padding: Padding = Padding.valueOf(underlying.padding)
+  def dataFormat: Option[DataFormat] = pyOption2Option(underlying.data_format).map(DataFormat.valueOf)
   def dilationRate: Int | (Int, Int) = underlying.dilation_rate
   def activation: Option[String] = underlying.activation
   def useBias: Boolean = underlying.use_bias

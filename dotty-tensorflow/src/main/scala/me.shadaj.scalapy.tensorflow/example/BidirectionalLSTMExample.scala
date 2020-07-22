@@ -2,6 +2,8 @@ package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.api.TensorFlow
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules
+import me.shadaj.scalapy.tensorflow.api.keras.optimizers.OptimizerNames
 import me.shadaj.scalapy.tensorflow.nd2Tensor
 import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}
@@ -43,7 +45,7 @@ object BidirectionalLSTMExample extends Runnable {
     model.add(layers.Dropout(0.5))
     model.add(layers.Dense(1, activation = Some("sigmoid")))
 
-    model.compile("adam", Some(keras1.backend.binaryCrossentropy), metrics = Seq("accuracy"))
+    model.compile(OptimizerNames.Adam, Some(keras1.backend.binaryCrossentropy), metrics = Seq("accuracy"))
 
     println("Train...")
     val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)
