@@ -25,6 +25,8 @@ jobs:
         # TF 2.2.0 is not available on conda for OS X yet
         - conda_tf_version=2.0.0
         - source ci/travis-install-conda.sh
+        # Necessary to work around https://github.com/dmlc/xgboost/issues/1715
+        - export KMP_DUPLICATE_LIB_OK=TRUE
 
     - os: linux
       dist: xenial
