@@ -5,6 +5,13 @@ import me.shadaj.scalapy.tensorflow.Tensor
 import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
 import me.shadaj.scalapy.tensorflow._
 
+/**
+  * This example performs linear regression on randomized input conforming to y= 0.1 * x + 0.3.
+  * Linear regression has a model h(x) = W * x + b with W and b as parameters.
+  * Regression requires loss function that represent the cost of current solution.
+  * In this case loss function is defined as mean squared error l(w,b) = mean(square(h(x_i) - y_i)).
+  * Stochastic Gradient Descend is used to minimize loss function by updating W and b parameters.
+  */
 object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {

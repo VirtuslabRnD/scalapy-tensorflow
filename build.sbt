@@ -41,7 +41,7 @@ lazy val dottyTensorflow = project
   .settings(
     name := "dotty-tensorflow",
     scalaVersion := dottyVersion,
-    libraryDependencies += "com.github.VirtuslabRnD.scalapy" % "scalapy-core_2.13" % "2597f7b23301ddd59067de24d4d3809cf475ae9f",
+    libraryDependencies += "com.github.VirtuslabRnD.scalapy" % "scalapy-core_2.13" % "b3d8ddc81753a72d11e46601f7a9ad719e452e5c",
     fork := true,
     javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
@@ -54,7 +54,7 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
   .settings(
     name := "scalapy-tensorflow-cross",
     // scalapy-core version will replace the one in scalapy-numpy (maintaining binary compatibility)
-    libraryDependencies += "com.github.VirtuslabRnD.scalapy" %%% "scalapy-core" % "2597f7b23301ddd59067de24d4d3809cf475ae9f",
+    libraryDependencies += "com.github.VirtuslabRnD.scalapy" %%% "scalapy-core" % "b3d8ddc81753a72d11e46601f7a9ad719e452e5c",
     libraryDependencies += "com.github.VirtuslabRnD.scalapy-numpy" %%% "scalapy-numpy" % "8a85b7068e9a377ba4b97e2cf9b7bbe008066202" exclude("me.shadaj", "scalapy-core"),
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
   ).jvmSettings(

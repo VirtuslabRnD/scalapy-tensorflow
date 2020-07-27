@@ -8,15 +8,6 @@ import me.shadaj.scalapy.tensorflow.nn.NN
 import me.shadaj.scalapy.tensorflow.random.Random
 import me.shadaj.scalapy.tensorflow.train.Train
 
-// some TensorFlow operations require a LIST list, not just something iterable
-@py.native
-trait PythonList[T] extends py.Object
-object PythonList {
-  implicit def seqToPythonList[T](seq: Seq[T])(implicit writer: Writer[Seq[T]]): PythonList[T] = {
-    py.global.list(py.Any.from(seq)(writer)).as[PythonList[T]]
-  }
-}
-
 @py.native
 trait TensorFlow extends py.Object {
 
@@ -48,7 +39,7 @@ trait TensorFlow extends py.Object {
 
   def zeros(shape: Seq[Int]): Tensor = py.native
 
-  def reshape(tensor: Tensor, shape: PythonList[Int]): Tensor = py.native
+  def reshape(tensor: Tensor, shape: Tensor): Tensor = py.native
 
   def add_n(ts: Seq[Tensor]): Tensor = py.native
 

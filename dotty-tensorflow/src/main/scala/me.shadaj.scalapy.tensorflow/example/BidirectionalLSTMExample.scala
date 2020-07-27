@@ -1,20 +1,20 @@
 package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules
 import me.shadaj.scalapy.tensorflow.nd2Tensor
 import Int.int2long
 import scala.language.implicitConversions
 
 /**
-  * https://keras.io/examples/imdb_bidirectional_lstm/
+  * https://keras.io/examples/nlp/bidirectional_lstm_imdb/
   */
 
 object BidirectionalLSTMExample extends Runnable {
 
   def run() = {
-    val tf = tensorflow
-    val np = numpy
+    val tf = Modules.tensorflow
+    val np = Modules.numpy
     val keras1 = tf.keras
     val layers = keras1.layers
     val imdb = keras1.datasets.imdb
