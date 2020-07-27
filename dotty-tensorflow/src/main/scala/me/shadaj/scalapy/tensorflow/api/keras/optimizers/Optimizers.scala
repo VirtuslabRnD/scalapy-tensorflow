@@ -7,9 +7,5 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import scala.language.implicitConversions
 
 class Optimizers private[api] (val underlying: PyOptimizers) extends PythonType[PyOptimizers] with PythonModule {
-  // def Adadelta(): Adadelta = py.native
-
-  // def Adam(learning_rate: Double): Adam = py.native
-
   def SGD(learningRate: Double, momentum: Option[Double]): SGD = new SGD(underlying.SGD(learningRate, momentum))
 }

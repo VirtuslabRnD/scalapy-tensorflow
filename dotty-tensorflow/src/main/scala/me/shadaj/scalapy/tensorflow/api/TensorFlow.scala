@@ -12,19 +12,15 @@ import me.shadaj.scalapy.tensorflow.seq2Tensor
 import me.shadaj.scalapy.py.PyFunction
 import me.shadaj.scalapy.py
 
-class TensorFlow {
+object TensorFlow {
   private val tf: PyTensorFlow = pyTensorflow
   // modules
-//
+
   def keras: Keras = new Keras(tf.keras)
-//
-//  def nn: NN = py.native
-//
+
   def random: Random = new Random(tf.random)
-//
+
   def compat: Compat = new Compat(tf.compat)
-//
-//  def train: Train = py.native
 
   // classes
 
@@ -52,9 +48,8 @@ class TensorFlow {
 
   def reduceMean(t: Tensor): Tensor = tf.reduce_mean(t)
 
-  def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Seq[Tensor] = {
+  def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Seq[Tensor] =
     tf.gradients(PythonUnion.convertSeq(ys), PythonUnion.convertSeq(xs)).map(new Tensor(_))
-  }
 
   def gradients(ys: Tensor, xs: Seq[Tensor], gradYs: Tensor): Seq[Tensor] = tf.gradients(ys, xs.map(_.underlying), gradYs).map(new Tensor(_))
 

@@ -7,7 +7,7 @@ import Int.int2long
 import scala.language.implicitConversions
 
 /**
-  * https://keras.io/examples/imdb_bidirectional_lstm/
+  * https://keras.io/examples/nlp/bidirectional_lstm_imdb/
   */
 
 object BidirectionalLSTMExample extends Runnable {

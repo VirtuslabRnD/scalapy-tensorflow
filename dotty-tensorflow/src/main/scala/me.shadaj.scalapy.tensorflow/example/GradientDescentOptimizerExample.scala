@@ -1,20 +1,25 @@
 package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.tensorflow.scala.utils.Modules
 import me.shadaj.scalapy.tensorflow.api.Tensor
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.CloseableResourceManager
 import me.shadaj.scalapy.tensorflow.api.Tensor.{TensorToPyTensor, nd2Tensor}
 import me.shadaj.scalapy.tensorflow.{nd2Tensor => nd2TensorPy}
-import me.shadaj.scalapy.tensorflow.api.TensorFlow
+import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}
 import scala.language.implicitConversions
+
+/**
+  * This example performs linear regression on randomized input that conforms to y= 0.1 * x + 0.3.
+  * Linear regression has a model h(x) = W * x + b with W and b as parameters.
+  * Regression requires loss function that represent the cost of current solution.
+  * In this case loss function is defined as mean squared error l(w,b) = mean(square(h(x_i) - y_i)).
+  * Stochastic Gradient Descend is used to minimize loss function by updating W and b parameters.
+  */
 
 object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {
-    val tf = new TensorFlow()
-    val np = Modules.numpy
-
     // Starting data
     val xData = np.random.rand(100).astype(np.float32)
     val yData = (xData * 0.1f) + 0.3f
