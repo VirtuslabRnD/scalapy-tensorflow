@@ -23,7 +23,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
       targetTensors: Option[String] = None
   ) =
     underlying.compile(
-      fromPyhtonTypeAndScalaTypeUnion(optimizer),
+      fromPythonTypeAndScalaTypeUnion(optimizer),
       loss,
       metrics,
       lossWeights,

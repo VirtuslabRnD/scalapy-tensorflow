@@ -4,6 +4,8 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.api.TensorFlow
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules
 import me.shadaj.scalapy.tensorflow.nd2Tensor
+import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}
 import Int.int2long
 import scala.language.implicitConversions
 
@@ -14,8 +16,6 @@ import scala.language.implicitConversions
 object BidirectionalLSTMExample extends Runnable {
 
   def run() = {
-    val tf = new TensorFlow()
-    val np = Modules.numpy
     val keras1 = tf.keras
     val layers = keras1.layers
     val imdb = keras1.datasets.imdb

@@ -1,3 +1,7 @@
 .idea/
 lib/
 target/
+.bloop/
+.devcontainer/
+.metals/
+project/metals.sbt

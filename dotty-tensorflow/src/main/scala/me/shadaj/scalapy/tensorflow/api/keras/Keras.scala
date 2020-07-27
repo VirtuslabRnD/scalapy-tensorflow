@@ -19,5 +19,4 @@ class Keras private[api] (val underlying: PyKeras) extends PythonType[PyKeras] w
   def layers: Layers = new Layers(underlying.layers)
   def preprocessing: Preprocessing = new Preprocessing(underlying.preprocessing)
 
-
 }
