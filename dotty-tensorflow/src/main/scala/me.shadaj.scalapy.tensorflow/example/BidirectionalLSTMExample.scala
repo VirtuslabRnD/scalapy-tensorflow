@@ -21,8 +21,6 @@ object BidirectionalLSTMExample extends Runnable {
     val imdb = keras1.datasets.imdb
     val sequence = keras1.preprocessing.sequence
     val maxFeatures = 20000
-    // cut texts after this number of words
-    // (among top maxFeatures most common words)
     val maxlen = 100
     val batchSize = 32
 
@@ -32,14 +30,12 @@ object BidirectionalLSTMExample extends Runnable {
     println(s"${xTest.length} test sequences")
 
     println("Pad sequences (samples x time)")
-    val xTrain1 = sequence.padSequences(xTrain, maxLen = Some(maxlen)).astype(np.float32)
-    val xTest1 = sequence.padSequences(xTest, maxLen = Some(maxlen)).astype(np.float32)
-    val yTrain1 = yTrain.astype(np.float32)
-    val yTest1 = yTest.astype(np.float32)
+    val xTrain1 = sequence.padSequences(xTrain, maxLen = Some(maxlen))
+    val xTest1 = sequence.padSequences(xTest, maxLen = Some(maxlen))
     println(s"xTrain shape: ${xTrain1.shape}")
     println(s"xTest shape: ${xTest1.shape}")
 
-    val model = keras1.models.Sequential()
+    val model = keras1.models.Sequential
     model.add(layers.Embedding(maxFeatures, 128, inputLength = Some(maxlen)))
     model.add(layers.Bidirectional(layers.LSTM(64)))
     model.add(layers.Dropout(0.5))
@@ -49,6 +45,6 @@ object BidirectionalLSTMExample extends Runnable {
 
     println("Train...")
     val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)
-    model.fit(xTrain1, yTrain1, batchSize = Some(batchSize), epochs = epochs, validationData = Some((xTest1, yTest1)))
+    model.fit(xTrain1, yTrain, batchSize = Some(batchSize), epochs = epochs, validationData = Some((xTest1, yTest)))
   }
 }

@@ -5,5 +5,5 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import scala.language.implicitConversions
 
 class Models private[api] (val underlying: PyModels) extends PythonType[PyModels] with PythonModule {
-  def Sequential(): Sequential = new Sequential(underlying.Sequential())
+  def Sequential: Sequential = new Sequential(underlying.Sequential())
 }

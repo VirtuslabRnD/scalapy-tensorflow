@@ -24,9 +24,9 @@ object PythonUnion {
 
   implicit def fromPythonUnion[A, B](u: py.|[A, B]): A | B = {
     if (u.isLeft) {
-      u.value.asInstanceOf[B]
-    } else {
       u.value.asInstanceOf[A]
+    } else {
+      u.value.asInstanceOf[B]
     }
   }
 
