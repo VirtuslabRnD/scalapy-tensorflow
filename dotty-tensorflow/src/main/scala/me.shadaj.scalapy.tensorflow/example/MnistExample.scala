@@ -31,7 +31,7 @@ object MnistExample extends Runnable {
     val y_train = trainingSetSize.map(tss => y_train_orig.slice(0, tss)).getOrElse(y_train_orig)
 
     val (train, test, input_shape) =
-      if (K.image_data_format() == "channels_first") {
+      if (K.image_data_format == "channels_first") {
         val train = x_train.reshape(Seq(x_train.shape(0), 1, img_rows, img_cols))
         val test = x_test.reshape(Seq(x_test.shape(0), 1, img_rows, img_cols))
         val input_shape = (1, img_rows, img_cols)

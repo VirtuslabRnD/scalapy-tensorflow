@@ -6,7 +6,8 @@ import random.Random
 import keras.Keras
 import compat.Compat
 import scala.language.implicitConversions
-import scalaUtils._
+import scalaUtils.PythonOption._
+import scalaUtils.PythonUnion._
 import me.shadaj.scalapy.tensorflow.seq2Tensor
 
 import me.shadaj.scalapy.py.PyFunction
@@ -49,7 +50,7 @@ object TensorFlow {
   def reduceMean(t: Tensor): Tensor = tf.reduce_mean(t)
 
   def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Seq[Tensor] =
-    tf.gradients(PythonUnion.convertSeq(ys), PythonUnion.convertSeq(xs)).map(new Tensor(_))
+    tf.gradients(ys, xs).map(new Tensor(_))
 
   def gradients(ys: Tensor, xs: Seq[Tensor], gradYs: Tensor): Seq[Tensor] = tf.gradients(ys, xs.map(_.underlying), gradYs).map(new Tensor(_))
 

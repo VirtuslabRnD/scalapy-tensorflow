@@ -5,6 +5,7 @@ object Main {
     (args match {
       case Array("MnistExample")                    => MnistExample
       case Array("GradientDescentOptimizerExample") => GradientDescentOptimizerExample
+      case Array("BidirectionalLSTMExample")        => BidirectionalLSTMExample
       case _                                        => throw new IllegalArgumentException("usage: sbt 'run <simple class name>'")
     }).run()
   }

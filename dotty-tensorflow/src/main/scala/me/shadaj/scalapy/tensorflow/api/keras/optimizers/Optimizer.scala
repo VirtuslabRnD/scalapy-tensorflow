@@ -4,7 +4,7 @@ import me.shadaj.scalapy.tensorflow.compat.v1.Operation
 import me.shadaj.scalapy.tensorflow.api.{Tensor, Variable}
 
 import me.shadaj.scalapy.tensorflow.keras.optimizers.{Optimizer => PyOptimizer}
-import me.shadaj.scalapy.tensorflow.api.scalaUtils.{PythonModule, PythonType}
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonType
 import scala.language.implicitConversions
 import me.shadaj.scalapy.py
 
