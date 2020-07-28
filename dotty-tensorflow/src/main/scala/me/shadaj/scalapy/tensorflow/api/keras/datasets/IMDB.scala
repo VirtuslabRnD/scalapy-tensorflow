@@ -1,6 +1,6 @@
 package me.shadaj.scalapy.tensorflow.api.keras.datasets
 import me.shadaj.scalapy.tensorflow.keras.datasets.{IMDB => PyIMDB}
-import me.shadaj.scalapy.tensorflow.api.scalaUtils.{PythonModule, PythonType}
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonType
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import scala.language.implicitConversions
 import me.shadaj.scalapy.numpy.NDArray

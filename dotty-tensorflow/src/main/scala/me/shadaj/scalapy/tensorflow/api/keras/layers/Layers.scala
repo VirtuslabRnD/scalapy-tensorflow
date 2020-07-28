@@ -9,7 +9,7 @@ import me.shadaj.scalapy.tensorflow.api.Tensor
 import me.shadaj.scalapy.tensorflow.api.Tensor._
 import me.shadaj.scalapy.py
 
-class Layers private[api] (val underlying: PyLayers) extends PythonType[PyLayers] with PythonModule {
+class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLayers] {
   def Conv2D(
       filters: Int,
       kernelSize: Int | (Int, Int),

@@ -6,7 +6,7 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.{PythonModule, PythonType}
 import me.shadaj.scalapy.tensorflow.api.compat.v1._
 import scala.language.implicitConversions
 
-class Compat private[api] (val underlying: PyCompat) extends PythonType[PyCompat] with PythonModule {
+class Compat private[api] (val underlying: PyCompat) extends PythonModule[PyCompat] {
 
   def v1: V1 = new V1(underlying.v1)
 
