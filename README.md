@@ -1,6 +1,6 @@
 # scalapy-tensorflow
 
-[![](https://travis-ci.com/shadaj/scalapy-tensorflow.svg?branch=master)](https://travis-ci.com/shadaj/scalapy-tensorflow)
+[![](https://travis-ci.org/VirtuslabRnD/scalapy-tensorflow.svg?branch=develop)](https://travis-ci.com/VirtuslabRnD/scalapy-tensorflow)
 ![](https://img.shields.io/maven-central/v/me.shadaj/scalapy-tensorflow_2.12.svg)
 
 Static facades for using [TensorFlow](https://www.tensorflow.org/) in [ScalaPy](https://scalapy.dev/).
