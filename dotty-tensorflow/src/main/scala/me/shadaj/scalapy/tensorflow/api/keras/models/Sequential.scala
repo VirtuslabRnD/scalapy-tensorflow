@@ -12,6 +12,13 @@ import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py.PyFunction
 import scala.language.implicitConversions
 
+enum Metrics(override private[api] val v: String) extends PythonEnum(v){
+  case AUC   extends Metrics("auc")
+  case Accuracy   extends Metrics("accuracy")
+  case BinaryAccuracy   extends Metrics("binary_accuracy")
+  case BinaryCrossentropy   extends Metrics("binary_crossentropy")
+}
+
 class Sequential private[api] (val underlying: PySequential) extends PythonType[PySequential] {
 
   def add(layer: Layer): Unit = underlying.add(layer.underlying)
@@ -19,7 +26,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
   def compile(
       optimizer: OptimizerNames | Optimizer = OptimizerNames.RMSprop,
       loss: Option[PyFunction] = None,
-      metrics: Seq[String] = Seq.empty,
+      metrics: Seq[Metrics] = Seq.empty,
       lossWeights: Option[Seq[(Double, Double)]] = None,
       sampleWeightMode: Option[String] = None,
       weightedMetrics: Seq[String] = Seq.empty,
@@ -28,7 +35,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
     underlying.compile(
       fromEnumPythonTypeUnion(optimizer),
       loss,
-      metrics,
+      metrics.map(_.v),
       lossWeights,
       sampleWeightMode,
       weightedMetrics,

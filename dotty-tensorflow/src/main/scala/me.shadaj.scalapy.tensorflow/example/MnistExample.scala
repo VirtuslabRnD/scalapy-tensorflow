@@ -5,6 +5,8 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
 import me.shadaj.scalapy.tensorflow.api.keras.datasets.Mnist
+import me.shadaj.scalapy.tensorflow.api.keras.activations.Activations
+import me.shadaj.scalapy.tensorflow.api.keras.models._
 import Int.int2long
 import scala.language.implicitConversions
 
@@ -57,14 +59,14 @@ object MnistExample extends Runnable {
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.25))
     model.add(layers.Flatten())
-    model.add(layers.Dense(units = 128, activation = Some("relu")))
+    model.add(layers.Dense(units = 128, activation = Some(Activations.Relu)))
     model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(units = numClasses.toInt, activation = Some("softmax")))
+    model.add(layers.Dense(units = numClasses.toInt, activation = Some(Activations.Softmax)))
 
     model.compile(
       loss = Some(kerasA.losses.categoricalCrossentropy),
       optimizer = kerasA.optimizers.Adadelta(),
-      metrics = Seq("accuracy")
+      metrics = Seq(Metrics.Accuracy)
     )
 
     model.fit(x = trainImages, y = trainLabels, batchSize = Some(batchSize), epochs = epochs, verbose = 1, validationData = Some((testImages, testLabels)))

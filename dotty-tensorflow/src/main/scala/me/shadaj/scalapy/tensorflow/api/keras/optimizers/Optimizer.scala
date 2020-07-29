@@ -12,7 +12,9 @@ trait Optimizer private[api] (val underlying: PyOptimizer) extends PythonType[Py
   // TODO loss should be a function () => py.Any
   def minimize(loss: py.Any, varList: Seq[Variable]): Operation = underlying.minimize(loss, varList.map(_.underlying))
 
-  def applyGradients(gradsAndVars: Seq[(Tensor, Variable)]): Operation =
+  def applyGradients(
+    gradsAndVars: Seq[(Tensor, Variable)]
+    ): Operation =
     underlying.apply_gradients(gradsAndVars.map {
       case (tensor, variable) => (tensor.underlying, variable.underlying)
     })
