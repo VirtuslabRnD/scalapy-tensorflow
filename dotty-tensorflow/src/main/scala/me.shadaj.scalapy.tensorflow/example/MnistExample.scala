@@ -3,7 +3,7 @@ package me.shadaj.scalapy.tensorflow.example
 import me.shadaj.scalapy.numpy.NumPy
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
-import me.shadaj.scalapy.tensorflow.api.TensorFlow
+import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
 import me.shadaj.scalapy.tensorflow.api.keras.datasets.Mnist
 import Int.int2long
 import scala.language.implicitConversions
@@ -11,7 +11,6 @@ import scala.language.implicitConversions
 object MnistExample extends Runnable {
 
   def run(): Unit = {
-    val tf = new TensorFlow()
     val np = numpy
     val kerasA = tf.keras
     val K = kerasA.backend
@@ -30,7 +29,7 @@ object MnistExample extends Runnable {
     val yTrain = trainingSetSize.map(tss => yTrainOrig.slice(0, tss)).getOrElse(yTrainOrig)
 
     val (train, test, inputShape) =
-      if (K.imageDataFormat == "channels_first") {
+      if (K.imageDataFormat() == "channels_first") {
         val train = xTrain.reshape(Seq(xTrain.shape(0), 1, imgRows, imgCols))
         val test = xTest.reshape(Seq(xTest.shape(0), 1, imgRows, imgCols))
         val inputShape = (1, imgRows, imgCols)
@@ -54,11 +53,7 @@ object MnistExample extends Runnable {
     val trainLabels = kerasA.utils.toCategorical(yTrain, Some(numClasses)).astype(np.float32)
     val testLabels = kerasA.utils.toCategorical(yTest, Some(numClasses)).astype(np.float32)
 
-    val model = kerasA.models.Sequential()
-    model.add(
-      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some("relu"), kwargs = Map("inputShape" -> inputShape))
-    )
-    model.add(layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some("relu")))
+    val model = kerasA.models.Sequential
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.25))
     model.add(layers.Flatten())

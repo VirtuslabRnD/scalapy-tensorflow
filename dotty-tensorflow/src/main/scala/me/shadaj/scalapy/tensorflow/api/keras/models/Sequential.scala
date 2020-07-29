@@ -52,4 +52,13 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
     )
   }
 
+   def evaluate(
+      x: NDArray[Float], 
+      y: NDArray[Float],
+      batchSize: Option[Int] = None,
+      verbose: Int = 1
+    ): Seq[Double] =
+    underlying.evaluate(x, y, batchSize, verbose)
+
+
 }

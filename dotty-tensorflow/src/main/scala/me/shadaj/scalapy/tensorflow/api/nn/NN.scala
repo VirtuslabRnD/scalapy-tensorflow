@@ -8,7 +8,7 @@ import me.shadaj.scalapy.tensorflow.api.Tensor._
 import me.shadaj.scalapy.py.PyFunction
 import scala.language.implicitConversions
 
-class NN private[api] (val underlying: PyNN) extends PythonType[PyNN] with PythonModule {
+class NN private[api] (val underlying: PyNN) extends PythonModule[PyNN] {
   def relu: PyFunction = underlying.relu
   def relu(features: Tensor): Tensor = underlying.relu(features)
 

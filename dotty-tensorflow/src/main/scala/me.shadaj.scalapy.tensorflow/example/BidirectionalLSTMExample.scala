@@ -18,7 +18,7 @@ object BidirectionalLSTMExample extends Runnable {
     val keras1 = tf.keras
     val layers = keras1.layers
     val imdb = keras1.datasets.imdb
-    val sequence = keras1.preprocessing.sequence
+    val sequence = tf.keras.preprocessing.sequence
     val maxFeatures = 200
     val maxLen = 10
     val batchSize = 32
