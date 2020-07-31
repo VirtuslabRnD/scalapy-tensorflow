@@ -58,6 +58,10 @@ script:
   - echo '-batch' > .sbtopts
   - sbt scalafmtCheck
   - sbt compile test
+
+  # Prevent TensorFlow from an attempt to access GPU
+  - export CUDA_VISIBLE_DEVICES=-1
+
   # We're keeping the number of epochs and training data size deliberately low -
   # the CI runs of the examples serve rather as smoke tests to spot linking/Python invocation errors.
   - export EPOCH_COUNT=40
