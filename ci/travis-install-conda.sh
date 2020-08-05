@@ -5,6 +5,6 @@ bash ~/miniconda.sh -b -p ~/miniconda
 source ~/miniconda/bin/activate
 
 conda install --yes --quiet python=3.7
-conda install --yes --quiet tensorflow=${conda_tf_version}
+conda install --yes --quiet nomkl tensorflow=${conda_tf_version}
 
 set +e +u
