@@ -7,15 +7,15 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum
 import scala.language.implicitConversions
 
-enum OptimizerNames (override private[api] val v: String) extends PythonEnum(v){
-  case Adam extends OptimizerNames("adam")
-  case Adagrad extends OptimizerNames("adagrad")
-  case Adadelta extends OptimizerNames("adadelta")
-  case Adamax extends OptimizerNames("adamax")
-  case Ftrl extends OptimizerNames("ftrl")
-  case Nadam extends OptimizerNames("nadam")
-  case RMSprop extends OptimizerNames("rmsprop")
-  case SGD extends OptimizerNames("sgd")
+enum OptimizerEnum (override private[api] val v: String) extends PythonEnum(v){
+  case Adam extends OptimizerEnum("adam")
+  case Adagrad extends OptimizerEnum("adagrad")
+  case Adadelta extends OptimizerEnum("adadelta")
+  case Adamax extends OptimizerEnum("adamax")
+  case Ftrl extends OptimizerEnum("ftrl")
+  case Nadam extends OptimizerEnum("nadam")
+  case RMSprop extends OptimizerEnum("rmsprop")
+  case SGD extends OptimizerEnum("sgd")
 }
 
 class Optimizers private[api] (val underlying: PyOptimizers) extends PythonModule[PyOptimizers] {

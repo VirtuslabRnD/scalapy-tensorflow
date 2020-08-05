@@ -6,7 +6,7 @@ lazy val scala211Version = "2.11.12"
 lazy val scala212Version = "2.12.11"
 lazy val scala213Version = "2.13.2"
 
-lazy val dottyVersion = "0.24.0-RC1"
+lazy val dottyVersion = "0.26.0-RC1"
 
 organization in ThisBuild := "me.shadaj"
 scalaVersion in ThisBuild := scala212Version

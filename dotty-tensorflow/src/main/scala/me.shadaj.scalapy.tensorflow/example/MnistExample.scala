@@ -6,6 +6,8 @@ import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
 import me.shadaj.scalapy.tensorflow.api.keras.datasets.Mnist
 import me.shadaj.scalapy.tensorflow.api.keras.models._
+import me.shadaj.scalapy.tensorflow.api.keras.metrics.Metric
+import me.shadaj.scalapy.tensorflow.api.keras.activations.Activation
 import Int.int2long
 import scala.language.implicitConversions
 
@@ -55,17 +57,21 @@ object MnistExample extends Runnable {
     val testLabels = kerasA.utils.toCategorical(yTest, Some(numClasses)).astype(np.float32)
 
     val model = kerasA.models.Sequential
+    model.add(
+      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some(Activation.Relu), kwargs = Map("input_shape" -> inputShape))
+    )
+    model.add(layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some(Activation.Relu)))
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.25))
     model.add(layers.Flatten())
-    model.add(layers.Dense(units = 128, activation = Some("relu")))
+    model.add(layers.Dense(units = 128, activation = Some(Activation.Relu)))
     model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(units = numClasses.toInt, activation = Some("softmax")))
+    model.add(layers.Dense(units = numClasses.toInt, activation = Some(Activation.Softmax)))
 
     model.compile(
       loss = Some(kerasA.losses.categoricalCrossentropy),
       optimizer = kerasA.optimizers.Adadelta(),
-      metrics = Seq("accuracy")
+      metrics = Seq(Metric.Accuracy)
     )
 
     model.fit(x = trainImages, y = trainLabels, batchSize = Some(batchSize), epochs = epochs, verbose = 1, validationData = Some((testImages, testLabels)))

@@ -11,13 +11,14 @@ object PythonOption {
       case Some(v) => py.|.fromRight(v)
     }
 
-  implicit def pyOption2Option[A]: Conversion[py.NoneOr[A], Option[A]] = { noneOr =>
-    if (noneOr.isLeft) {
+   extension [A](pythonOption: py.NoneOr[A]) implicit def toScalaOption: Option[A] = {
+    if (pythonOption.isLeft) {
       None
     } else {
-      Some(noneOr.value.asInstanceOf[A])
+      Some(pythonOption.value.asInstanceOf[A])
     }
-
   }
 
+
 }
+

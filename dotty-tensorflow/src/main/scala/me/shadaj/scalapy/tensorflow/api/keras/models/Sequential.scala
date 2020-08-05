@@ -17,7 +17,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
   def add(layer: Layer): Unit = underlying.add(layer.underlying)
 
   def compile(
-      optimizer: OptimizerNames | Optimizer = OptimizerNames.RMSprop,
+      optimizer: OptimizerEnum | Optimizer = OptimizerEnum.RMSprop,
       loss: Option[PyFunction] = None,
       metrics: Seq[String] = Seq.empty,
       lossWeights: Option[Seq[(Double, Double)]] = None,
@@ -26,7 +26,7 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
       targetTensors: Option[String] = None
   ) =
     underlying.compile(
-      fromEnumPythonTypeUnion(optimizer),
+      optimizer,
       loss,
       metrics,
       lossWeights,

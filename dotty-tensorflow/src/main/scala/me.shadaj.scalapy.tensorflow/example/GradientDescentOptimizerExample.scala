@@ -3,7 +3,7 @@ package me.shadaj.scalapy.tensorflow.example
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.api.Tensor
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.CloseableResourceManager
-import me.shadaj.scalapy.tensorflow.api.Tensor.{TensorToPyTensor, nd2Tensor}
+import me.shadaj.scalapy.tensorflow.api.Tensor.{TensorToPyTensor}
 import me.shadaj.scalapy.tensorflow.{nd2Tensor => nd2TensorPy}
 import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}

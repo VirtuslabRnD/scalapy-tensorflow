@@ -11,8 +11,6 @@ import me.shadaj.scalapy.tensorflow.api.Tensor
 import me.shadaj.scalapy.tensorflow.api.Tensor._
 import me.shadaj.scalapy.py
 
-
-
 enum Padding(override private[api] val v: String) extends PythonEnum(v){
   case Valid   extends Padding("valid")
   case Same    extends Padding("same")
@@ -24,10 +22,10 @@ enum DataFormat(override private[api] val v: String) extends PythonEnum(v){
 }
 
 enum MergeMode(override private[api] val v: String) extends PythonEnum(v){
-  case Sum   extends MergeMode("sum")
-  case Mul  extends MergeMode("mul")
-  case Concat  extends MergeMode("concat")
-  case Ave  extends MergeMode("ave")
+  case Sum          extends MergeMode("sum")
+  case Multiply     extends MergeMode("mul")
+  case Concatenate  extends MergeMode("concat")
+  case Average      extends MergeMode("ave")
 }
 
 class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLayers] {
@@ -78,9 +76,9 @@ class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLaye
       strides: Option[Int | (Int, Int)] = None,
       padding: Padding = Padding.Valid,
       dataFormat: Option[DataFormat] = None
-  ): MaxPooling2D = new MaxPooling2D(underlying.MaxPooling2D(poolSize, option2PyOption(strides.map(fromScalaTypesUnion(_))), padding, pyOption2Option(dataFormat).map(_.v)))
+  ): MaxPooling2D = new MaxPooling2D(underlying.MaxPooling2D(poolSize, option2PyOption(strides.map(fromScalaTypesUnion(_))), padding, option2PyOption(dataFormat.map(_.v))))
 
-  def Flatten(dataFormat: Option[DataFormat] = None): Flatten = new Flatten(underlying.Flatten(pyOption2Option(dataFormat).map(_.v)))
+  def Flatten(dataFormat: Option[DataFormat] = None): Flatten = new Flatten(underlying.Flatten(dataFormat.map(_.v)))
 
   def Dense(
       units: Int,
@@ -136,7 +134,7 @@ class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLaye
 
   def Bidirectional(
       layer: Layer,
-      mergeMode: MergeMode = MergeMode.Concat,
+      mergeMode: MergeMode = MergeMode.Concatenate,
       weights: Option[NDArray[Int]] = None,
       kwargs: Map[String, py.Any] = Map()
   ): Bidirectional = new Bidirectional(underlying.Bidirectional(layer.underlying, mergeMode, weights, kwargs))

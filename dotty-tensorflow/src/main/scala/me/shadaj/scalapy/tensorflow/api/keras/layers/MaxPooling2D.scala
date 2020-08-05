@@ -7,7 +7,7 @@ import scala.language.implicitConversions
 
 class MaxPooling2D private[api] (override val underlying: PyMaxPooling2D) extends Layer(underlying) {
   def poolSize: (Int, Int) = underlying.pool_size
-  def strides: Option[Int | (Int, Int)] = pyOption2Option(underlying.strides).map(fromPythonUnion(_))
+  def strides: Option[Int | (Int, Int)] = underlying.strides.toScalaOption.map(fromPythonUnion(_))
   def padding: Padding = Padding.valueOf(underlying.padding)
-  def dataFormat: Option[DataFormat] = pyOption2Option(underlying.data_format).map(DataFormat.valueOf)
+  def dataFormat: Option[DataFormat] = underlying.data_format.toScalaOption.map(DataFormat.valueOf)
 }
