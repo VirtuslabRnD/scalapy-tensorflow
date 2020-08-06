@@ -6,5 +6,5 @@ source ~/miniconda/bin/activate
 
 conda install --yes --quiet python=3.7
 conda install --yes --quiet nomkl tensorflow=${conda_tf_version}
-
+conda install --yes --quiet numpy=1.18.5
 set +e +u
