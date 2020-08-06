@@ -58,7 +58,7 @@ script:
   - echo '-batch' >> .sbtopts
   - sbt scalafmtCheck
   - sbt compile test
-
+  - export OMP_NUM_THREADS=1
   # Prevent TensorFlow from an attempt to access GPU
   - export CUDA_VISIBLE_DEVICES=-1
 
