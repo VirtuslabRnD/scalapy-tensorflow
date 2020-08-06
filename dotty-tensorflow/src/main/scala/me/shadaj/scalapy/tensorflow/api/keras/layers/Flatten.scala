@@ -6,5 +6,5 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import scala.language.implicitConversions
 
 class Flatten private[api] (override val underlying: PyFlatten) extends Layer(underlying) {
-  def dataFormat: Option[String] = underlying.data_format
+  def dataFormat: Option[DataFormat] = underlying.data_format.toScalaOption.map(DataFormat.valueOf)
 }
