@@ -12,7 +12,7 @@ enum OptimizerEnum (override private[api] val v: String) extends PythonEnum(v){
   case Adagrad extends OptimizerEnum("adagrad")
   case Adadelta extends OptimizerEnum("adadelta")
   case Adamax extends OptimizerEnum("adamax")
-  case Ftrl extends OptimizerEnum("ftrl")
+  case FtRL extends OptimizerEnum("ftrl")
   case Nadam extends OptimizerEnum("nadam")
   case RMSprop extends OptimizerEnum("rmsprop")
   case SGD extends OptimizerEnum("sgd")

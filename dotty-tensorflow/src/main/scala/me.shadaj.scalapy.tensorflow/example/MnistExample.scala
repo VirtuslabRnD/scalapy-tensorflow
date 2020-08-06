@@ -58,13 +58,13 @@ object MnistExample extends Runnable {
 
     val model = kerasA.models.Sequential
     model.add(
-      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some(Activation.Relu), kwargs = Map("input_shape" -> inputShape))
+      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some(Activation.ReLU), kwargs = Map("input_shape" -> inputShape))
     )
-    model.add(layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some(Activation.Relu)))
+    model.add(layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some(Activation.ReLU)))
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.25))
     model.add(layers.Flatten())
-    model.add(layers.Dense(units = 128, activation = Some(Activation.Relu)))
+    model.add(layers.Dense(units = 128, activation = Some(Activation.ReLU)))
     model.add(layers.Dropout(0.5))
     model.add(layers.Dense(units = numClasses.toInt, activation = Some(Activation.Softmax)))
 
