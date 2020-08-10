@@ -28,7 +28,7 @@ lazy val scalaPyTensorFlow = project
     scalaPyTensorFlowExamplesJVM,
     scalaPyTensorFlowNative,
     scalaPyTensorFlowExamplesNative,
-    dottyTensorflow,
+    dottyTensorFlow,
     dottyTensorFlowExamples
   ).settings(
     name := "scalapy-tensorflow",
@@ -38,7 +38,7 @@ lazy val scalaPyTensorFlow = project
     )
   )
 
-lazy val dottyTensorflow = project
+lazy val dottyTensorFlow = project
   .in(file("dotty-tensorflow"))
   .settings(
     name := "dotty-tensorflow",
@@ -59,7 +59,7 @@ lazy val dottyTensorFlowExamples = project
     fork := true,
     publish / skip := true
   )
-  .dependsOn(dottyTensorflow)
+  .dependsOn(dottyTensorFlow)
 
 
 lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
