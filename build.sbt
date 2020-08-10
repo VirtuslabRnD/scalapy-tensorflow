@@ -54,7 +54,9 @@ lazy val dottyTensorFlowExamples = project
   .in(file("dotty-tensorflow-examples"))
   .settings(
     name := "dotty-tensorflow-examples",
-    scalaVersion := dottyVersion,
+    scalaVersion := dottyVersion,  
+    javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
+    fork := true,
     publish / skip := true
   )
   .dependsOn(dottyTensorflow)
@@ -102,7 +104,10 @@ lazy val scalaPyTensorFlowExamplesCross = crossProject(JVMPlatform, NativePlatfo
     name := "tensorflow-examples-cross",
     publish / skip := true
   ).jvmSettings(
-    scalaVersion := scala213Version
+    scalaVersion := scala213Version,
+    javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
+    javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
+    fork := true
   ).nativeSettings(
     scalaVersion := scala211Version,
     nativeLinkStubs := true,
