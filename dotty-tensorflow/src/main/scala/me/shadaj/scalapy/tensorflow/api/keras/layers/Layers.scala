@@ -76,7 +76,7 @@ class Layers private[api] (val underlying: PyLayers) extends PythonModule[PyLaye
       strides: Option[Int | (Int, Int)] = None,
       padding: Padding = Padding.Valid,
       dataFormat: Option[DataFormat] = None
-  ): MaxPooling2D = new MaxPooling2D(underlying.MaxPooling2D(poolSize, option2PyOption(strides.map(fromScalaTypesUnion(_))), padding, option2PyOption(dataFormat.map(_.v))))
+  ): MaxPooling2D = new MaxPooling2D(underlying.MaxPooling2D(poolSize, option2PyOption(strides.map(fromSingleAndTupleUnion(_))), padding, option2PyOption(dataFormat.map(_.v))))
 
   def Flatten(dataFormat: Option[DataFormat] = None): Flatten = new Flatten(underlying.Flatten(dataFormat.map(_.v)))
 
