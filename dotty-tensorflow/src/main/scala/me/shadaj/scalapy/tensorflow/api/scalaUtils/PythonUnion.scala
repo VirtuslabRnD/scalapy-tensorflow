@@ -22,7 +22,15 @@ object PythonUnion {
     }
   }
 
-  implicit def fromScalaTypesUnion[A, B](u: A | B)(implicit ev1: ClassTag[A], ev2: ClassTag[B]): py.|[A, B] =
+  implicit def fromSingleAndTupleUnion[A, T <: Tuple](u: A | T)(implicit ev1: ClassTag[A], ev2: ClassTag[T]): py.|[A,T] = {
+    u match {
+      case a: A => py.|.fromLeft(a)
+      case b: T => py.|.fromRight(b)
+      case _ => throw new IllegalArgumentException()
+    }
+  }
+
+  def fromScalaTypesUnion[A, B](u: A | B)(implicit ev1: ClassTag[A], ev2: ClassTag[B]): py.|[A, B] =
     u match {
       case a: A => a
       case b: B => b

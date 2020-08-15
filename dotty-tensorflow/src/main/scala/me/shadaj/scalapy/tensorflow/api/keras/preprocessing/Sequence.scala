@@ -27,6 +27,6 @@ class Sequence private[api] (val underlying: PySequence) extends PythonType[PySe
       padding: Padding = Padding.Pre,
       truncating: Truncating = Truncating.Pre,
       value: Double | String = 0.0
-  ): NDArray[Long] = underlying.pad_sequences(sequences, maxLen, dtype, padding, truncating, value)
+  ): NDArray[Long] = underlying.pad_sequences(sequences, maxLen, dtype, padding, truncating, fromScalaTypesUnion(value))
 
 }
