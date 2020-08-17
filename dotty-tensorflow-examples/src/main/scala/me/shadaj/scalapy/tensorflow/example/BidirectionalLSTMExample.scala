@@ -18,6 +18,7 @@ import scala.language.implicitConversions
 object BidirectionalLSTMExample extends Runnable {
 
   def run() = {
+    val timeTotalStart = System.nanoTime()
     val keras1 = tf.keras
     val layers = keras1.layers
     val imdb = keras1.datasets.imdb
@@ -42,14 +43,21 @@ object BidirectionalLSTMExample extends Runnable {
 
     val model = keras1.models.Sequential
     model.add(layers.Embedding(maxFeatures, 128, inputLength = Some(maxLen)))
+    model.add(layers.Bidirectional(layers.LSTM(64, returnSequences=true)))
     model.add(layers.Bidirectional(layers.LSTM(64)))
-    model.add(layers.Dropout(0.5))
     model.add(layers.Dense(1, activation = Some(Activation.Sigmoid)))
 
     model.compile(OptimizerEnum.Adam, Some(keras1.backend.binaryCrossentropy), metrics = Seq(Metric.Accuracy))
 
     println("Train...")
-    val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)
+    val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(2)
     model.fit(xTrain1, yTrain1, batchSize = Some(batchSize), epochs = epochs, validationData = Some((xTest1, yTest1)))
+    
+    val score = model.evaluate(x = xTest1, y = yTest1, verbose = 0)
+
+    println(s"Test loss: ${score(0)}")
+    println(s"Test accuracy: ${score(1)}")
+    val timeTotalEnd = System.nanoTime()
+    println(s"Elapsed Total time: " + (timeTotalEnd - timeTotalStart)/1000000000 + "ns")
   }
 }
