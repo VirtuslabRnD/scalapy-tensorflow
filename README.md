@@ -7,10 +7,22 @@ Static facades for using [TensorFlow](https://www.tensorflow.org/) in [ScalaPy](
 Currently contains minimal bindings for usage with TensorFlow.
 
 ## Installation
-`scalapy-tensorflow` is published on Maven Central, so you can add it to your project by including it as a dependency.
+To install `scalapy-tensorflow` use [JitPack](https://jitpack.io/)
+for scala 2.13:
+```
+scalaVersion := "2.13.3"
 
-```scala
-libraryDependencies += "me.shadaj" %% "scalapy-tensorflow" % "0.1.0"
+resolvers in ThisBuild += "jitpack" at "https://jitpack.io"
+
+libraryDependencies += "com.github.VirtuslabRnD.scalapy-tensorflow" %% "scalapy-tensorflow-jvm" % "develop-SNAPSHOT"
+```
+for dotty:
+```
+scalaVersion := "0.26.0-RC1"
+
+resolvers in ThisBuild += "jitpack" at "https://jitpack.io"
+
+libraryDependencies += "com.github.VirtuslabRnD.scalapy-tensorflow" %% "dotty-tensorflow" % "develop-SNAPSHOT"
 ```
 
 ## Development

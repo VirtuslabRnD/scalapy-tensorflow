@@ -41,12 +41,13 @@ object BidirectionalLSTMExample extends Runnable {
     println(s"xTrain shape: ${xTrain1.shape}")
     println(s"xTest shape: ${xTest1.shape}")
 
-    val model = keras1.models.Sequential
-    model.add(layers.Embedding(maxFeatures, 128, inputLength = Some(maxLen)))
-    model.add(layers.Bidirectional(layers.LSTM(64, returnSequences=true)))
-    model.add(layers.Bidirectional(layers.LSTM(64)))
-    model.add(layers.Dense(1, activation = Some(Activation.Sigmoid)))
-
+    val model = keras1.models.Sequential(layers = Seq(
+      layers.Embedding(maxFeatures, 128, inputLength = Some(maxLen)),
+      layers.Bidirectional(layers.LSTM(64, returnSequences=true)),
+      layers.Bidirectional(layers.LSTM(64)),
+      layers.Dense(1, activation = Some(Activation.Sigmoid))
+    ))
+    
     model.compile(OptimizerEnum.Adam, Some(keras1.backend.binaryCrossentropy), metrics = Seq(Metric.Accuracy))
 
     println("Train...")
