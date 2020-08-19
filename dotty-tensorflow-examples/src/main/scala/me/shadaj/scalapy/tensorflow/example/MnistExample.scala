@@ -56,18 +56,17 @@ object MnistExample extends Runnable {
     val trainLabels = kerasA.utils.toCategorical(yTrain, Some(numClasses)).astype(np.float32)
     val testLabels = kerasA.utils.toCategorical(yTest, Some(numClasses)).astype(np.float32)
 
-    val model = kerasA.models.Sequential
-    model.add(
-      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some(Activation.ReLU), kwargs = Map("input_shape" -> inputShape))
-    )
-    model.add(layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some(Activation.ReLU)))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Dropout(0.25))
-    model.add(layers.Flatten())
-    model.add(layers.Dense(units = 128, activation = Some(Activation.ReLU)))
-    model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(units = numClasses.toInt, activation = Some(Activation.Softmax)))
-
+    val model = kerasA.models.Sequential(layers = Seq(
+      layers.Conv2D(filters = 32, kernelSize = (3, 3), activation = Some(Activation.ReLU), kwargs = Map("input_shape" -> inputShape)),
+      layers.Conv2D(filters = 64, kernelSize = (3, 3), activation = Some(Activation.ReLU)),
+      layers.MaxPooling2D((2, 2)),
+      layers.Dropout(0.25),
+      layers.Flatten(),
+      layers.Dense(units = 128, activation = Some(Activation.ReLU)),
+      layers.Dropout(0.5),
+      layers.Dense(units = numClasses.toInt, activation = Some(Activation.Softmax))
+    ))
+    
     model.compile(
       loss = Some(kerasA.losses.categoricalCrossentropy),
       optimizer = kerasA.optimizers.Adadelta(),
