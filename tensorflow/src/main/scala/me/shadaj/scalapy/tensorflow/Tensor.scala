@@ -1,6 +1,5 @@
 package me.shadaj.scalapy.tensorflow
 
-import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py
 
 @py.native

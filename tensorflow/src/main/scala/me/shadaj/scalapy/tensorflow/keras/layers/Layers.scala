@@ -4,6 +4,7 @@ import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Tensor
 import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
+import me.shadaj.scalapy.tensorflow.compat.v1.Session
 
 @py.native
 trait Layers extends py.Object with PythonModule {

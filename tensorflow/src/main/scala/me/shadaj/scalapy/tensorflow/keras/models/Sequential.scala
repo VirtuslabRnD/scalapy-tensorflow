@@ -1,9 +1,9 @@
 package me.shadaj.scalapy.tensorflow.keras
 package models
 
+import me.shadaj.scalapy.numpy.{NDArray, PythonSeq}
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.keras.layers.Layer
-import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py.PyFunction
 import me.shadaj.scalapy.tensorflow.keras.optimizers.Optimizer
 
@@ -16,10 +16,10 @@ trait Sequential extends py.Object {
   def compile(
       optimizer: py.|[String, Optimizer] = "rmsprop",
       loss: py.NoneOr[PyFunction] = py.None,
-      metrics: Seq[String] = Seq.empty,
-      loss_weights: py.NoneOr[Seq[(Double, Double)]] = py.None,
+      metrics: PythonSeq[String] = PythonSeq.emptyString,
+      loss_weights: py.NoneOr[PythonSeq[(Double, Double)]] = py.None,
       sample_weight_mode: py.NoneOr[String] = py.None,
-      weighted_metrics: Seq[String] = Seq.empty,
+      weighted_metrics: PythonSeq[String] = PythonSeq.emptyString,
       target_tensors: py.NoneOr[String] = py.None
   ) =
     origDynamic

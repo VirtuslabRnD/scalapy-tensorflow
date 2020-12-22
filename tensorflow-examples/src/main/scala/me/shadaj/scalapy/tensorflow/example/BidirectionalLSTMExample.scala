@@ -4,7 +4,10 @@ import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.TensorFlow
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules
 import me.shadaj.scalapy.tensorflow.nd2Tensor
+import me.shadaj.scalapy.py.SeqConverters
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
+import me.shadaj.scalapy.numpy.{NDArray, PythonSeq}
+
 import Int.int2long
 import scala.language.implicitConversions
 
@@ -32,20 +35,20 @@ object BidirectionalLSTMExample extends Runnable {
     println(s"${xTest.length} test sequences")
 
     println("Pad sequences (samples x time)")
-    val xTrain1 = sequence.pad_sequences(xTrain, maxlen = maxlen).astype(np.float32)
-    val xTest1 = sequence.pad_sequences(xTest, maxlen = maxlen).astype(np.float32)
-    val yTrain1 = yTrain.astype(np.float32)
-    val yTest1 = yTest.astype(np.float32)
+    val xTrain1 = sequence.pad_sequences(xTrain, maxlen = maxlen).astype(np.float32).as[NDArray[Float]]
+    val xTest1 = sequence.pad_sequences(xTest, maxlen = maxlen).astype(np.float32).as[NDArray[Float]]
+    val yTrain1 = yTrain.astype(np.float32).as[NDArray[Float]]
+    val yTest1 = yTest.astype(np.float32).as[NDArray[Float]]
     println(s"xTrain shape: ${xTrain1.shape}")
     println(s"xTest shape: ${xTest1.shape}")
 
     val model = keras1.models.Sequential()
-    model.add(layers.Embedding(maxFeatures, 128, input_length = maxlen))
+    model.add(layers.Embedding(input_dim = maxFeatures, output_dim = 128, input_length = maxlen))
     model.add(layers.Bidirectional(layers.LSTM(64)))
     model.add(layers.Dropout(0.5))
     model.add(layers.Dense(1, activation = "sigmoid"))
 
-    model.compile("adam", keras1.backend.binary_crossentropy, metrics = Seq("accuracy"))
+    model.compile("adam", keras1.backend.binary_crossentropy, metrics = Seq("accuracy").toPythonProxy.as[PythonSeq[String]])
 
     println("Train...")
     val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)

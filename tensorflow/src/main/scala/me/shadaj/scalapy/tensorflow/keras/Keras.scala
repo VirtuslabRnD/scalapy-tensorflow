@@ -1,5 +1,6 @@
 package me.shadaj.scalapy.tensorflow.keras
 
+import me.shadaj.scalapy.numpy.PythonSeq
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Tensor
 import me.shadaj.scalapy.tensorflow.keras.backend.Backend
@@ -24,7 +25,7 @@ trait Keras extends py.Object with PythonModule {
   def preprocessing: Preprocessing = py.native
 
   def Input(
-      shape: Seq[py.NoneOr[Int]] = Seq(),
+      shape: PythonSeq[py.NoneOr[Int]] = Seq.empty[py.NoneOr[Int]].toPythonProxy.as[PythonSeq[py.NoneOr[Int]]],
 //     batch_size: py.NoneOr[Int]=py.None,
       name: py.NoneOr[String] = py.None,
       dtype: py.NoneOr[String] = py.None,

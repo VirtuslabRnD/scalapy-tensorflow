@@ -1,7 +1,7 @@
 package me.shadaj.scalapy.tensorflow.keras.datasets
 
-import me.shadaj.scalapy.py
 import me.shadaj.scalapy.numpy.NDArray
+import me.shadaj.scalapy.py
 
 @py.native
 trait Mnist extends py.Object {

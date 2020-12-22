@@ -2,11 +2,12 @@ package me.shadaj.scalapy.tensorflow.example
 
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.keras.datasets.Mnist
+import me.shadaj.scalapy.numpy.NDArray
 
 object MnistExample extends Runnable {
 
   def run(): Unit = {
-    val tf = tensorflow
+/*    val tf = tensorflow
     val keras = tf.keras
     val np = numpy
     val K = keras.backend
@@ -73,6 +74,6 @@ object MnistExample extends Runnable {
     val score = model.evaluate(x = testImages, y = testLabels, verbose = 0)
 
     println(s"Test loss: ${score(0)}")
-    println(s"Test accuracy: ${score(1)}")
+    println(s"Test accuracy: ${score(1)}")*/
   }
 }
