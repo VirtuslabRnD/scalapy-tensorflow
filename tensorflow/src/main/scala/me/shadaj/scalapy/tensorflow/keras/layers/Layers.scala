@@ -4,9 +4,11 @@ import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.Tensor
 import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
+import me.shadaj.scalapy.tensorflow.compat.v1.{PythonDict, Session}
 
 @py.native
 trait Layers extends py.Object with PythonModule {
+  private val origDynamic = this.as[py.Dynamic]
   def Conv2D(
       filters: Int,
       kernel_size: py.|[Int, (Int, Int)],
@@ -23,7 +25,7 @@ trait Layers extends py.Object with PythonModule {
       activity_regularizer: py.NoneOr[String] = py.None,
       kernel_constraint: py.NoneOr[String] = py.None,
       bias_constraint: py.NoneOr[String] = py.None,
-      kwargs: Map[String, py.Any] = Map()
+      kwargs: Map[String, py.Any] = Map.empty[String, py.Any]
   ): Conv2D = py.nativeNamed
 
   def Dropout(rate: Double, noise_shape: py.NoneOr[Tensor] = py.None, seed: py.NoneOr[Int] = py.None): Dropout = py.nativeNamed

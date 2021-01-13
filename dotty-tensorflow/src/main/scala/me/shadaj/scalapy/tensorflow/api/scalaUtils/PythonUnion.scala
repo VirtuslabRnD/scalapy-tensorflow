@@ -1,5 +1,6 @@
 package me.shadaj.scalapy.tensorflow.api.scalaUtils
 
+import me.shadaj.scalapy.numpy.PythonSeq
 import me.shadaj.scalapy.py
 import scala.language.implicitConversions
 import scala.reflect.ClassTag
@@ -15,10 +16,11 @@ object PythonUnion {
   }
 
   implicit def fromPythonUnion[A, B](u: py.|[A, B]): A | B = {
-    if (u.isLeft) {
-      u.value.asInstanceOf[A]
+    val uu: py.|[A, B] = u.asInstanceOf[py.|[A, B]]
+    if (uu.isLeft) {
+      uu.value.asInstanceOf[A]
     } else {
-      u.value.asInstanceOf[B]
+      uu.value.asInstanceOf[B]
     }
   }
 
@@ -39,7 +41,7 @@ object PythonUnion {
 
   implicit def fromPythonTypeSeqsUnion[X <: py.Any, Y <: py.Any, A <: PythonType[X], B <: Seq[PythonType[Y]]](
       u: A | B
-  )(implicit ev1: ClassTag[A], ev2: ClassTag[B]): py.|[X, Seq[Y]] =
+  )(implicit ev1: ClassTag[A], ev2: ClassTag[B]): py.|[X, PythonSeq[Y]] =
     u match {
       case a: A => py.|.fromLeft(a.underlying)
       case b: B => py.|.fromRight(b.map(_.underlying))

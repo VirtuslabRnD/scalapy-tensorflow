@@ -1,8 +1,10 @@
 package me.shadaj.scalapy.tensorflow.keras
 
+import me.shadaj.scalapy.interpreter.PyValue
+
 import scala.util.control.NonFatal
-import me.shadaj.scalapy.py.{PyValue, Reader}
 import me.shadaj.scalapy.py
+import me.shadaj.scalapy.readwrite.Reader
 
 package object layers {
   implicit val tupleReader: Reader[py.|[Int, (Int, Int)]] = new Reader[py.|[Int, (Int, Int)]] {

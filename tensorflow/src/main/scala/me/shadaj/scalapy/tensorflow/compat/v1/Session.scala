@@ -1,15 +1,15 @@
 package me.shadaj.scalapy.tensorflow.compat.v1
 
-import me.shadaj.scalapy.numpy._
+import me.shadaj.scalapy.numpy.{NDArray, PythonSeq}
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.py.Writer
+import me.shadaj.scalapy.readwrite.Writer
 import me.shadaj.scalapy.tensorflow.{Tensor, Variable}
 
 @py.native
 trait PythonDict[K, V] extends py.Object
 object PythonDict {
   implicit def mapToPythonDict[K, V](map: Map[K, V])(implicit writer: Writer[Map[K, V]]): PythonDict[K, V] = {
-    py.global.dict(map).as[PythonDict[K, V]]
+    py.Dynamic.global.dict(map).as[PythonDict[K, V]]
   }
 }
 
@@ -25,5 +25,5 @@ trait Session extends py.Object {
 
   def run(fetches: Tensor, feedDict: PythonDict[Tensor, py.Object]): Seq[NDArray[Double]] = py.native
 
-  def run(fetches: Seq[Tensor], feedDict: PythonDict[Tensor, py.Object]): Seq[Seq[NDArray[Double]]] = py.native
+  def run(fetches: PythonSeq[Tensor], feedDict: PythonDict[Tensor, py.Object]): Seq[Seq[NDArray[Double]]] = py.native
 }

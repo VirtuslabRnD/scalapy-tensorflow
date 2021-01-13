@@ -3,7 +3,10 @@ package me.shadaj.scalapy.tensorflow.api.keras.layers
 import me.shadaj.scalapy.tensorflow.keras.layers.{Conv2D => PyConv2D}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonUnion._
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
+
 import scala.language.implicitConversions
+import me.shadaj.scalapy.tensorflow.api.scalaUtils
+import me.shadaj.scalapy.py.|
 
 class Conv2D private[api] (override val underlying: PyConv2D) extends Layer(underlying) {
   def filters: Int = underlying.filters

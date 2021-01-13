@@ -1,7 +1,9 @@
 package me.shadaj.scalapy
 
+import me.shadaj.scalapy.interpreter.PyValue
 import me.shadaj.scalapy.numpy.NDArray
-import me.shadaj.scalapy.py.Writer
+import me.shadaj.scalapy.readwrite.{Reader, Writer}
+import me.shadaj.scalapy.py.SeqConverters
 
 import scala.language.implicitConversions
 
@@ -14,7 +16,17 @@ package object tensorflow {
     nd.as[Tensor]
   }
 
-  implicit def seq2Tensor(s: Seq[Int]): Tensor = {
-    py.Any.from(s)(Writer.seqWriter).as[Tensor]
+  implicit def ndd2Tensor(nd: NDArray[Double]): Tensor = {
+    nd.as[Tensor]
   }
+
+  implicit def seq2Tensor(s: Seq[Int]): Tensor = {
+    s.toPythonProxy.as[Tensor]
+  }
+
 }
+
+
+
+
+

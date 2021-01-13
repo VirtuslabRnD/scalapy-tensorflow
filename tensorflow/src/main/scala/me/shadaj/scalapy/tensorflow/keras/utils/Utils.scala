@@ -1,7 +1,7 @@
 package me.shadaj.scalapy.tensorflow.keras.utils
 
-import me.shadaj.scalapy.py
 import me.shadaj.scalapy.numpy.NDArray
+import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.scala.utils.PythonModule
 
 @py.native

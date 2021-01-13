@@ -1,7 +1,8 @@
 package me.shadaj.scalapy.tensorflow
 
+import me.shadaj.scalapy.numpy.PythonSeq
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.py.{PyFunction, Writer, |}
+import me.shadaj.scalapy.py.{PyFunction, |}
 import me.shadaj.scalapy.tensorflow.compat.Compat
 import me.shadaj.scalapy.tensorflow.keras.Keras
 import me.shadaj.scalapy.tensorflow.nn.NN
@@ -41,7 +42,7 @@ trait TensorFlow extends py.Object {
 
   def reshape(tensor: Tensor, shape: Tensor): Tensor = py.native
 
-  def add_n(ts: Seq[Tensor]): Tensor = py.native
+  def add_n(ts: PythonSeq[Tensor]): Tensor = py.native
 
   def square(t: Tensor): Tensor = py.native
 
@@ -49,9 +50,9 @@ trait TensorFlow extends py.Object {
 
   def reduce_mean(t: Tensor): Tensor = py.native
 
-  def gradients(ys: Tensor | Seq[Tensor], xs: Tensor | Seq[Tensor]): Seq[Tensor] = py.native
+  def gradients(ys: Tensor | PythonSeq[Tensor], xs: Tensor | PythonSeq[Tensor]): Seq[Tensor] = py.native
 
-  def gradients(ys: Tensor, xs: Seq[Tensor], grad_ys: Tensor): Seq[Tensor] = py.native
+  def gradients(ys: Tensor, xs: PythonSeq[Tensor], grad_ys: Tensor): Seq[Tensor] = py.native
 
   def cond(c: Tensor, ifTrue: py.Object, ifFalse: py.Object): Tensor = py.native
 

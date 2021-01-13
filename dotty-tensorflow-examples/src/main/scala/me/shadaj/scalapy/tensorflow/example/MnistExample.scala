@@ -1,6 +1,6 @@
 package me.shadaj.scalapy.tensorflow.example
 
-import me.shadaj.scalapy.numpy.NumPy
+import me.shadaj.scalapy.numpy.{NDArray, NumPy, PythonSeq}
 import me.shadaj.scalapy.py
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
 import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
@@ -8,6 +8,8 @@ import me.shadaj.scalapy.tensorflow.api.keras.datasets.Mnist
 import me.shadaj.scalapy.tensorflow.api.keras.models._
 import me.shadaj.scalapy.tensorflow.api.keras.metrics.Metric
 import me.shadaj.scalapy.tensorflow.api.keras.activations.Activation
+import me.shadaj.scalapy.py.SeqConverters
+
 import Int.int2long
 import scala.language.implicitConversions
 
@@ -28,8 +30,8 @@ object MnistExample extends Runnable {
     val mnist: Mnist = kerasA.datasets.mnist
     val ((xTrainOrig, yTrainOrig), (xTest, yTest)) = mnist.loadData()
     val trainingSetSize = Option(System.getenv("TRAINING_SET_SIZE")).map(_.toInt)
-    val xTrain = trainingSetSize.map(tss => xTrainOrig.slice(0, tss)).getOrElse(xTrainOrig)
-    val yTrain = trainingSetSize.map(tss => yTrainOrig.slice(0, tss)).getOrElse(yTrainOrig)
+    val xTrain = trainingSetSize.map(tss => xTrainOrig.slice(0, tss)).getOrElse(xTrainOrig).asInstanceOf[NDArray[Long]]
+    val yTrain = trainingSetSize.map(tss => yTrainOrig.slice(0, tss)).getOrElse(yTrainOrig).asInstanceOf[NDArray[Long]]
 
     val (train, test, inputShape) =
       if (K.imageDataFormat() == "channels_first") {
@@ -46,8 +48,8 @@ object MnistExample extends Runnable {
         (train, test, inputShape)
       }
 
-    val trainImages = train.astype(np.float32) / 255.0f
-    val testImages = test.astype(np.float32) / 255.0f
+    val trainImages = train.astype(np.float32).as[NDArray[Float]] / 255.0f
+    val testImages = test.astype(np.float32).as[NDArray[Float]] / 255.0f
 
     println(s"xTrain shape: ${trainImages.shape}")
     println(s"${trainImages.shape(0)} train samples")
@@ -70,12 +72,13 @@ object MnistExample extends Runnable {
     model.compile(
       loss = Some(kerasA.losses.categoricalCrossentropy),
       optimizer = kerasA.optimizers.Adadelta(),
-      metrics = Seq(Metric.Accuracy)
+      metrics = Seq[String](Metric.Accuracy)
     )
 
-    model.fit(x = trainImages, y = trainLabels, batchSize = Some(batchSize), epochs = epochs, verbose = 1, validationData = Some((testImages, testLabels)))
+    model.fit(x = trainImages, y = trainLabels.as[NDArray[Float]], batchSize = Some(batchSize), epochs = epochs, verbose = 1, 
+      validationData = Some((testImages.as[NDArray[Float]], testLabels.as[NDArray[Float]])))
 
-    val score = model.evaluate(x = testImages, y = testLabels, verbose = 0)
+    val score = model.evaluate(x = testImages, y = testLabels.as[NDArray[Float]], verbose = 0)
 
     println(s"Test loss: ${score(0)}")
     println(s"Test accuracy: ${score(1)}")

@@ -5,12 +5,22 @@ import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption._
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonUnion._
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum._
-import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonEnum
 import me.shadaj.scalapy.tensorflow.api.keras.layers._
 import me.shadaj.scalapy.tensorflow.api.keras.optimizers._
 import me.shadaj.scalapy.numpy.NDArray
 import me.shadaj.scalapy.py.PyFunction
+
 import scala.language.implicitConversions
+import me.shadaj.scalapy.numpy.PythonSeq
+import me.shadaj.scalapy.py
+import me.shadaj.scalapy.py.SeqConverters
+import me.shadaj.scalapy.tensorflow.TensorFlow
+import me.shadaj.scalapy.tensorflow.nd2Tensor
+import me.shadaj.scalapy.py.SeqConverters
+import me.shadaj.scalapy.tensorflow.scala.utils.Modules._
+import me.shadaj.scalapy.numpy.{NDArray, PythonSeq}
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonOption.toScalaOption
+import me.shadaj.scalapy.readwrite.Writer
 
 class Sequential private[api] (val underlying: PySequential) extends PythonType[PySequential] {
 
@@ -19,11 +29,11 @@ class Sequential private[api] (val underlying: PySequential) extends PythonType[
   def compile(
       optimizer: OptimizerEnum | Optimizer = OptimizerEnum.RMSprop,
       loss: Option[PyFunction] = None,
-      metrics: Seq[String] = Seq.empty,
-      lossWeights: Option[Seq[(Double, Double)]] = None,
-      sampleWeightMode: Option[String] = None,
-      weightedMetrics: Seq[String] = Seq.empty,
-      targetTensors: Option[String] = None
+      metrics: PythonSeq[String] = PythonSeq.emptyString,
+      lossWeights: py.NoneOr[PythonSeq[(Double, Double)]] = py.None,
+      sampleWeightMode: py.NoneOr[String] = None,
+      weightedMetrics: PythonSeq[String] = PythonSeq.emptyString,
+      targetTensors: py.NoneOr[String] = None
   ) =
     underlying.compile(
       optimizer,
