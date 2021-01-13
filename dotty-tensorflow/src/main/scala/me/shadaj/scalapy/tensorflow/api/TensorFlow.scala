@@ -1,19 +1,26 @@
 package me.shadaj.scalapy.tensorflow.api
 
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{tensorflow => pyTensorflow}
-import me.shadaj.scalapy.tensorflow.{TensorFlow => PyTensorFlow, Tensor => PyTensor}
+import me.shadaj.scalapy.tensorflow.{TensorFlow => PyTensorFlow}
+import me.shadaj.scalapy.numpy.PythonSeq.seqToPythonSeq
+import me.shadaj.scalapy.tensorflow.seq2Tensor
 import random.Random
 import keras.Keras
 import compat.Compat
 import nn.NN
 import train.Train
+
 import scala.language.implicitConversions
 import scalaUtils.PythonOption._
 import scalaUtils.PythonUnion._
-import me.shadaj.scalapy.tensorflow.seq2Tensor
-
 import me.shadaj.scalapy.py.PyFunction
 import me.shadaj.scalapy.py
+import me.shadaj.scalapy.py.|.fromLeft
+import me.shadaj.scalapy.py.|.fromRight
+import me.shadaj.scalapy.tensorflow.api.scalaUtils.PythonUnion.fromSingleAndTupleUnion
+import me.shadaj.scalapy.tensorflow.api.Tensor.TensorToPyTensor
+import me.shadaj.scalapy.tensorflow.api.Tensor.PyTensorToTensor
+
 
 object TensorFlow {
   private val tf: PyTensorFlow = pyTensorflow

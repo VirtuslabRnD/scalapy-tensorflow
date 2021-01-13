@@ -7,7 +7,11 @@ import me.shadaj.scalapy.tensorflow.scala.utils.ContextManager
 import me.shadaj.scalapy.tensorflow._
 import me.shadaj.scalapy.py.SeqConverters
 import me.shadaj.scalapy.numpy.PythonSeq.seqToPythonSeq
+import me.shadaj.scalapy.py
+import me.shadaj.scalapy.py.Dynamic.global
 import me.shadaj.scalapy.readwrite.Writer
+import me.shadaj.scalapy.readwrite.Reader
+import me.shadaj.scalapy.py.SeqConverters
 import me.shadaj.scalapy.tensorflow.ndd2Tensor
 
 /**

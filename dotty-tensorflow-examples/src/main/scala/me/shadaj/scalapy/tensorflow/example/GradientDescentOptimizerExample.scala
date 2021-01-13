@@ -1,12 +1,17 @@
 package me.shadaj.scalapy.tensorflow.example
 
+import me.shadaj.scalapy.numpy.{NDArray, PythonSeq}
 import me.shadaj.scalapy.py
-import me.shadaj.scalapy.tensorflow.api.Tensor
+import me.shadaj.scalapy.py.SeqConverters
+import me.shadaj.scalapy.numpy.PythonSeq.seqToPythonSeq
+import me.shadaj.scalapy.tensorflow.{Tensor => PyTensor}
+import me.shadaj.scalapy.tensorflow.{Variable => PyVariable}
 import me.shadaj.scalapy.tensorflow.api.scalaUtils.CloseableResourceManager
-import me.shadaj.scalapy.tensorflow.api.Tensor.{TensorToPyTensor}
+import me.shadaj.scalapy.tensorflow.api.Tensor.TensorToPyTensor
 import me.shadaj.scalapy.tensorflow.{nd2Tensor => nd2TensorPy}
-import me.shadaj.scalapy.tensorflow.api.{TensorFlow => tf}
+import me.shadaj.scalapy.tensorflow.api.{Variable, Tensor, TensorFlow => tf}
 import me.shadaj.scalapy.tensorflow.scala.utils.Modules.{numpy => np}
+
 import scala.language.implicitConversions
 
 /**
@@ -21,7 +26,7 @@ object GradientDescentOptimizerExample extends Runnable {
 
   def run(): Unit = {
     // Starting data
-    val xData = np.random.rand(100).astype(np.float32)
+    val xData = np.random.rand(100).astype(np.float32).as[NDArray[Float]]
     val yData = (xData * 0.1f) + 0.3f
 
     // Variables
@@ -35,11 +40,11 @@ object GradientDescentOptimizerExample extends Runnable {
     def loss = () => tf.reduceMean(tf.square(y() - yData))
 
     // Function to calculate gradients
-    def grad(): Option[(Tensor, Seq[Tensor])] =
+    def grad(): Option[(PyTensor, Seq[PyTensor])] =
       CloseableResourceManager.withResource(tf.GradientTape()) { tape =>
         val lossValue = loss()
         val gradients: Seq[Tensor] = tape.gradient(lossValue, Seq(W, b))
-        (lossValue, gradients)
+        (lossValue.underlying, gradients.map(_.underlying))
       }
 
     // Select optimizer SGD
@@ -52,7 +57,9 @@ object GradientDescentOptimizerExample extends Runnable {
     val num_epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(400)
     for (epoch <- 1 to num_epochs) {
       val (lossValue, grads) = grad().get
-      optimizer.applyGradients(grads.zip(Seq(W, b)))
+      val aa = grads.zip(Seq(W.underlying, b.underlying))
+      optimizer.applyGradients(aa)
+      //optimizer.applyGradients(grads.zip(Seq(W, b)))
       if (epoch % 50 == 0)
         println(s"Epoch ${epoch}: Loss: ${lossValue.numpy()}")
     }

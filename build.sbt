@@ -6,7 +6,7 @@ lazy val scala211Version = "2.11.12"
 lazy val scala212Version = "2.12.11"
 lazy val scala213Version = "2.13.2"
 
-lazy val dottyVersion = "0.26.0-RC1"
+lazy val dottyVersion = "3.0.0-M3"
 
 organization in ThisBuild := "me.shadaj"
 scalaVersion in ThisBuild := scala212Version
@@ -26,8 +26,8 @@ lazy val scalaPyTensorFlow = project
   .aggregate(
     scalaPyTensorFlowJVM,
     scalaPyTensorFlowExamplesJVM,
-    //scalaPyTensorFlowNative,
-    //scalaPyTensorFlowExamplesNative,
+    scalaPyTensorFlowNative,
+    scalaPyTensorFlowExamplesNative,
     dottyTensorFlow,
     dottyTensorFlowExamples
   ).settings(
@@ -43,7 +43,7 @@ lazy val dottyTensorFlow = project
   .settings(
     name := "dotty-tensorflow",
     scalaVersion := dottyVersion,
-    libraryDependencies += "com.github.shadaj.scalapy" % "scalapy-core_2.13" % "90a9ea7b731d7f457d11659c4b945b2816dbd5c4",
+    libraryDependencies += "me.shadaj" % "scalapy-core_2.13" % "0.4.0+11-aea09719",
     fork := true,
     javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
@@ -62,14 +62,14 @@ lazy val dottyTensorFlowExamples = project
   .dependsOn(dottyTensorFlow)
 
 
-lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform)
+lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
   .in(file("tensorflow"))
   .settings(
     name := "scalapy-tensorflow-cross",
     // scalapy-core version will replace the one in scalapy-numpy (maintaining binary compatibility)
-    libraryDependencies += "com.github.shadaj.scalapy" %% "scalapy-core" % "90a9ea7b731d7f457d11659c4b945b2816dbd5c4",
-    libraryDependencies += "com.github.piotrmwojcik" % "scalapy-numpy" % "bc2bce338c12bff8831cff8a5213e1a0af829de6" exclude("me.shadaj", "scalapy-core_2.13"),
+    libraryDependencies += "me.shadaj" %%% "scalapy-core" % "0.4.0+11-aea09719",
+    libraryDependencies += "me.shadaj" %%% "scalapy-numpy" % "0.1.0+13-442717a6+20210113-0045" excludeAll("com.github.shadaj.scalapy", "scalapy-core_2.13"),
     projectDependencies ~=(_.map(_.withDottyCompat(dottyVersion))),
   ).jvmSettings(
     scalaVersion := scala213Version,
@@ -79,7 +79,7 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform)
     fork := true,
     javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib"
-  )/*.nativeSettings(
+  ).nativeSettings(
     // We need to stick to Scala 2.11 here since scalapy-core and scalapy-numpy are only provided for scala-native (0.3) under Scala 2.11
     scalaVersion := scala211Version,
     libraryDependencies += "com.github.lolgab" %%% "scalacheck" % "1.14.1" % Test,
@@ -91,13 +91,13 @@ lazy val scalaPyTensorFlowCross = crossProject(JVMPlatform)
         s"-L${"python3-config --prefix".!!.trim}/lib",
       ) ++ "python3-config --ldflags".!!.split(' ').map(_.trim).filter(_.nonEmpty).toSeq
     }
-  )*/
+  )
 
 lazy val scalaPyTensorFlowJVM = scalaPyTensorFlowCross.jvm.settings(name := "scalapy-tensorflow-jvm")
-//lazy val scalaPyTensorFlowNative = scalaPyTensorFlowCross.native.settings(name := "scalapy-tensorflow-native")
+lazy val scalaPyTensorFlowNative = scalaPyTensorFlowCross.native.settings(name := "scalapy-tensorflow-native")
 
 
-lazy val scalaPyTensorFlowExamplesCross = crossProject(JVMPlatform)
+lazy val scalaPyTensorFlowExamplesCross = crossProject(JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
   .in(file("tensorflow-examples"))
   .settings(
@@ -108,7 +108,7 @@ lazy val scalaPyTensorFlowExamplesCross = crossProject(JVMPlatform)
     javaOptions += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     javaOptions in Test += s"-Djna.library.path=${"python3-config --prefix".!!.trim}/lib",
     fork := true
-  )/*.nativeSettings(
+  ).nativeSettings(
     scalaVersion := scala211Version,
     nativeLinkStubs := true,
     nativeLinkingOptions ++= {
@@ -118,11 +118,11 @@ lazy val scalaPyTensorFlowExamplesCross = crossProject(JVMPlatform)
         s"-L${"python3-config --prefix".!!.trim}/lib",
       ) ++ "python3-config --ldflags".!!.split(' ').map(_.trim).filter(_.nonEmpty).toSeq
     }
-  )*/
+  )
   .dependsOn(scalaPyTensorFlowCross)
 
 lazy val scalaPyTensorFlowExamplesJVM = scalaPyTensorFlowExamplesCross.jvm.settings(name := "tensorflow-example-jvm")
-//lazy val scalaPyTensorFlowExamplesNative = scalaPyTensorFlowExamplesCross.native.settings(name := "tensorflow-example-native")
+lazy val scalaPyTensorFlowExamplesNative = scalaPyTensorFlowExamplesCross.native.settings(name := "tensorflow-example-native")
 
 
 // To make sure that changes to project structure are picked up by sbt without an explicit `reload`

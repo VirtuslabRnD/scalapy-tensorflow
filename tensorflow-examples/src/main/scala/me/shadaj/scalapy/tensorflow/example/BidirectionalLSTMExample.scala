@@ -43,12 +43,12 @@ object BidirectionalLSTMExample extends Runnable {
     println(s"xTest shape: ${xTest1.shape}")
 
     val model = keras1.models.Sequential()
-    model.add(layers.Embedding(input_dim = maxFeatures, output_dim = 128, input_length = maxlen))
+    model.add(layers.Embedding(maxFeatures, 128, input_length = maxlen))
     model.add(layers.Bidirectional(layers.LSTM(64)))
     model.add(layers.Dropout(0.5))
     model.add(layers.Dense(1, activation = "sigmoid"))
 
-    model.compile("adam", keras1.backend.binary_crossentropy, metrics = Seq("accuracy").toPythonProxy.as[PythonSeq[String]])
+    model.compile("adam", keras1.backend.binary_crossentropy, metrics = Seq("accuracy")
 
     println("Train...")
     val epochs = Option(System.getenv("EPOCH_COUNT")).map(_.toInt).getOrElse(4)
